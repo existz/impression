@@ -110,7 +110,7 @@
     <string name="about_desc">About the app, its developer, its contributors, etc.</string>
 
     <string name="overview_display">Overview All Media Mode</string>
-    <string name="overview_mode_desc">When enabled, the overview screen will display a continuous list of all media rather than albums.</string>
+    <string name="overview_mode_desc">Display a continuous list of all media rather than albums</string>
     <string name="settings">Settings</string>
     <string name="name_asc">Name ascend</string>
     <string name="modified_desc">Date descend</string>
@@ -122,7 +122,7 @@
     <string name="copy_to">Copy To…</string>
     <string name="move_to">Move To…</string>
     <string name="dark_mode">Dark Mode</string>
-    <string name="dark_mode_desc">This will make the background of the app dark, and the default theme colors dark.</string>
+    <string name="dark_mode_desc">Apply a dark background to the app</string>
     <string name="no_excluded_folders">No albums have been excluded yet!</string>
     <string name="add">Add</string>
     <string name="go_up">Go up…</string>
@@ -130,16 +130,16 @@
     <string name="moving">Moving…</string>
     <string name="download">Download</string>
     <string name="include_subfolders">Include Subfolders</string>
-    <string name="include_subfolders_desc">Whether or not to also exclude the subfolders of excluded albums.</string>
-    <string name="include_subfolders_included_desc">When viewing included folders, whether or not media of subfolders are also shown (when explorer mode is off).</string>
+    <string name="include_subfolders_desc">Exclude subfolders of exluded albums</string>
+    <string name="include_subfolders_included_desc">Display subfolders inside of included folders</string>
     <string name="choose_album">Choose an album…</string>
     <string name="invalid_file_path_error">This file does not exist or Impression does not have permission to access it.</string>
     <string name="included_folders">Included Folders</string>
     <string name="defaultStr">Default</string>
     <string name="primary_color">Primary Color</string>
-    <string name="primary_color_desc">The primary theme color to use. Defaults to Material indigo or a shade of gray based on the theme.</string>
+    <string name="primary_color_desc">Apply a primary theme color</string>
     <string name="accent_color">Accent Color</string>
-    <string name="accent_color_desc">The accent theme color to use. Defaults to Material pink.</string>
+    <string name="accent_color_desc">Apply an accent color</string>
     <string name="theme">Theme</string>
     <string name="remember_for_directory">Remember for directory</string>
     <string name="exclude">Exclude</string>
@@ -153,7 +153,7 @@
     <string name="slideshow_seeklabel">%1$d seconds between each slide</string>
     <string name="slideshow_seeklabel_single">1 second between each slide</string>
     <string name="colored_navbar">Colored Navigation Bar</string>
-    <string name="colored_navbar_desc">Whether or not the system navigation bar is colored with the primary color.</string>
+    <string name="colored_navbar_desc">Apply the primary color to the navigation bar</string>
     <string name="whats_new">What\'s New</string>
     <string name="root">Root</string>
     <string name="internal_storage">Internal Storage</string>
@@ -182,7 +182,7 @@
 
     <string name="behavior">Behavior</string>
     <string name="toolbar_stats">Toolbar Album Stats</string>
-    <string name="toolbar_stats_desc">Display the number of photos and videos in an album in the toolbar.</string>
+    <string name="toolbar_stats_desc">Display the number of photos and videos in an album in the toolbar</string>
     <string name="empty">empty</string>
     <string name="share_using">Share using…</string>
 
