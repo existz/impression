@@ -42,12 +42,9 @@ import static com.afollestad.impression.ui.MainActivity.EXTRA_OLD_ITEM_POSITION;
 public class MediaFragment extends LoaderFragment<MediaAdapter.ViewHolder> implements MediaAdapter.Callback {
 
     private String mAlbumPath;
-    public MediaCab mCab;
     private boolean mLastDarkTheme;
 
     private static final String STATE_ALBUMPATH = "state_albumpath";
-    private static final String STATE_MEDIACAB_ENTRIES = "state_media_cab_entries";
-
 
     public static MediaFragment create(String albumPath) {
         MediaFragment frag = new MediaFragment();
@@ -66,10 +63,6 @@ public class MediaFragment extends LoaderFragment<MediaAdapter.ViewHolder> imple
     public void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mAlbumPath = savedInstanceState.getString(STATE_ALBUMPATH, null);
-            if (savedInstanceState.containsKey(STATE_MEDIACAB_ENTRIES)) {
-                mCab = new MediaCab(this, (ViewerActivity.MediaWrapper) savedInstanceState.getSerializable(STATE_MEDIACAB_ENTRIES));
-                mCab.restoreState(savedInstanceState);
-            }
         } else if (getArguments() != null) {
             mAlbumPath = getArguments().getString("albumPath");
         }
@@ -82,24 +75,27 @@ public class MediaFragment extends LoaderFragment<MediaAdapter.ViewHolder> imple
     @Override
     public void onResume() {
         super.onResume();
-        boolean darkTheme = PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("dark_theme", false);
-        if (mCab != null && !mCab.isStarted()) {
-            mCab.start();
-        }
-        if (darkTheme != mLastDarkTheme) {
-            invalidateLayoutManagerAndAdapter();
-        }
         if (getActivity() != null) {
+            MainActivity act = (MainActivity) getActivity();
+            if (act.mMediaCab != null)
+                act.mMediaCab.setFragment(this, true);
+
+            boolean darkTheme = PreferenceManager.getDefaultSharedPreferences(act).getBoolean("dark_theme", false);
+            if (darkTheme != mLastDarkTheme) {
+                invalidateLayoutManagerAndAdapter();
+            }
+
             if (mAlbumPath == null || mAlbumPath.equals(AlbumEntry.ALBUM_OVERVIEW) ||
                     mAlbumPath.equals(Environment.getExternalStorageDirectory().getAbsolutePath())) {
-                ((MainActivity) getActivity()).drawerArrowOpen = true;
-                ((MainActivity) getActivity()).animateDrawerArrow(true);
+                act.drawerArrowOpen = true;
+                act.animateDrawerArrow(true);
             } else {
-                ((MainActivity) getActivity()).animateDrawerArrow(false);
+                act.animateDrawerArrow(false);
             }
-            if (getTitle() != null && getActivity() != null)
-                getActivity().setTitle(getTitle());
-            crumb = ((MainActivity) getActivity()).mCrumbs.findCrumb(getAlbumPath());
+
+            if (getTitle() != null)
+                act.setTitle(getTitle());
+            crumb = act.mCrumbs.findCrumb(getAlbumPath());
         }
 
         reload();
@@ -109,10 +105,6 @@ public class MediaFragment extends LoaderFragment<MediaAdapter.ViewHolder> imple
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(STATE_ALBUMPATH, mAlbumPath);
-        if (mCab != null) {
-            outState.putSerializable(STATE_MEDIACAB_ENTRIES, mCab.getEntries());
-            mCab.saveState(outState);
-        }
     }
 
     @Override
@@ -165,12 +157,16 @@ public class MediaFragment extends LoaderFragment<MediaAdapter.ViewHolder> imple
                     act.finish();
                 }
             } else if (longClick) {
-                if (mCab == null) mCab = new MediaCab(this);
-                if (!mCab.isStarted()) mCab.start();
-                mCab.toggleEntry(entry);
+                if (act.mMediaCab == null)
+                    act.mMediaCab = new MediaCab(getActivity());
+                if (!act.mMediaCab.isStarted())
+                    act.mMediaCab.start();
+                act.mMediaCab.setFragment(this, false);
+                act.mMediaCab.toggleEntry(entry);
             } else {
-                if (mCab != null && mCab.isStarted()) {
-                    mCab.toggleEntry(entry);
+                if (act.mMediaCab != null && act.mMediaCab.isStarted()) {
+                    act.mMediaCab.setFragment(this, false);
+                    act.mMediaCab.toggleEntry(entry);
                 } else {
                     if (entry.isFolder() || entry.isAlbum()) {
                         act.switchPage(entry.data(), false, true);
@@ -214,7 +210,7 @@ public class MediaFragment extends LoaderFragment<MediaAdapter.ViewHolder> imple
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK &&
                 (requestCode == MediaCab.COPY_REQUEST_CODE || requestCode == MediaCab.MOVE_REQUEST_CODE)) {
-            mCab.finishCopyMove(new File(data.getData().getPath()), requestCode);
+            ((MainActivity) getActivity()).mMediaCab.finishCopyMove(new File(data.getData().getPath()), requestCode);
         }
     }
 

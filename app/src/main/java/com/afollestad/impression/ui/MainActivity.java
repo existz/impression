@@ -329,6 +329,7 @@ public class MainActivity extends ThemedActivity
             switchPage(AlbumEntry.ALBUM_OVERVIEW, true);
         } else if (!isSelectAlbumMode()) {
             if (mTitle != null) getSupportActionBar().setTitle(mTitle);
+            mMediaCab = MediaCab.restoreState(savedInstanceState, this);
         }
 
         getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -394,6 +395,8 @@ public class MainActivity extends ThemedActivity
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("breadcrumbs_state", mCrumbs.getStateWrapper());
+        if (mMediaCab != null)
+            mMediaCab.saveState(outState);
     }
 
     @Override

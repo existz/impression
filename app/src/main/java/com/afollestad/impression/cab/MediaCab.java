@@ -1,5 +1,6 @@
 package com.afollestad.impression.cab;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -11,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -49,49 +49,67 @@ import java.util.List;
  */
 public class MediaCab implements Serializable, MaterialCab.Callback {
 
-    private final transient MediaFragment mContext;
-    private final List<MediaEntry> mMediaEntries;
+    private final transient MainActivity mContext;
+    private transient MediaFragment mFragment;
+
+    private List<MediaEntry> mMediaEntries;
     private MaterialCab mCab;
 
     public final static int COPY_REQUEST_CODE = 8000;
     public final static int MOVE_REQUEST_CODE = 9000;
+    private static final String STATE_MEDIACAB_ENTRIES = "state_media_cab_entries";
 
-    public MediaCab(MediaFragment context) {
+    public MediaCab(Activity context) {
+        this((MainActivity) context);
+    }
+
+    public MediaCab(MainActivity context) {
         mContext = context;
         mMediaEntries = new ArrayList<>();
     }
 
-    public MediaCab(MediaFragment context, ViewerActivity.MediaWrapper instanceState) {
-        mContext = context;
-        mMediaEntries = instanceState.getMedia();
-    }
-
-    public ViewerActivity.MediaWrapper getEntries() {
-        return new ViewerActivity.MediaWrapper(mMediaEntries, true);
+    public void setFragment(MediaFragment frag, boolean invalidateChecked) {
+        mFragment = frag;
+        if (invalidateChecked)
+            invalidateChecked();
     }
 
     public void start() {
-        MainActivity act = (MainActivity) mContext.getActivity();
-        act.mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        act.mMediaCab = this;
-        mCab = new MaterialCab(act, R.id.cab_stub)
-                .setMenu(R.menu.cab)
-                .setBackgroundColor(act.primaryColor())
-                .setCloseDrawableRes(R.drawable.ic_action_discard)
-                .start(this);
+        mContext.mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mContext.mMediaCab = this;
+        if (mCab == null) {
+            mCab = new MaterialCab(mContext, R.id.cab_stub)
+                    .setMenu(R.menu.cab)
+                    .setBackgroundColor(mContext.primaryColor())
+                    .setCloseDrawableRes(R.drawable.ic_action_discard)
+                    .start(this);
+        } else if (!mCab.isActive()) {
+            mCab.start(this);
+        }
+        invalidateChecked();
+    }
 
-        if (mMediaEntries.size() > 0) {
+    private void invalidateChecked() {
+        if (mFragment != null && mMediaEntries.size() > 0) {
             for (MediaEntry e : mMediaEntries)
-                ((MediaAdapter) mContext.getAdapter()).setItemChecked(e, true);
+                ((MediaAdapter) mFragment.getAdapter()).setItemChecked(e, true);
         }
     }
 
     public void saveState(Bundle out) {
         mCab.saveState(out);
+        out.putSerializable(STATE_MEDIACAB_ENTRIES, new ViewerActivity.MediaWrapper(mMediaEntries, true));
     }
 
-    public void restoreState(Bundle in) {
-        mCab = MaterialCab.restoreState(in, (AppCompatActivity) mContext.getActivity(), this);
+    public static MediaCab restoreState(Bundle in, MainActivity context) {
+        ViewerActivity.MediaWrapper wrapper = (ViewerActivity.MediaWrapper) in.getSerializable(STATE_MEDIACAB_ENTRIES);
+        if (wrapper != null) {
+            MediaCab cab = new MediaCab(context);
+            cab.mMediaEntries = wrapper.getMedia();
+            cab.mCab = MaterialCab.restoreState(in, context, cab);
+            return cab;
+        }
+        return null;
     }
 
     public boolean isStarted() {
@@ -130,12 +148,12 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
         }
         if (!found)
             mMediaEntries.add(p);
-        ((MediaAdapter) mContext.getAdapter()).setItemChecked(p, forceCheckOn || !found);
+        ((MediaAdapter) mFragment.getAdapter()).setItemChecked(p, forceCheckOn || !found);
         invalidate();
     }
 
     private void excludeEntries() {
-        new MaterialDialog.Builder(mContext.getActivity())
+        new MaterialDialog.Builder(mContext)
                 .content(mMediaEntries.size() == 1 ?
                         R.string.exclude_prompt_single : R.string.exclude_prompt, mMediaEntries.size())
                 .positiveText(R.string.yes)
@@ -151,7 +169,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
     }
 
     private void performExclude() {
-        final ProgressDialog mDialog = new ProgressDialog(mContext.getActivity());
+        final ProgressDialog mDialog = new ProgressDialog(mContext);
         mDialog.setMessage(mContext.getString(R.string.excluding));
         mDialog.setIndeterminate(false);
         mDialog.setMax(mMediaEntries.size());
@@ -162,20 +180,18 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
             public void run() {
                 for (MediaEntry e : mMediaEntries) {
                     if (!mDialog.isShowing()) break;
-                    ExcludedFolderProvider.add(mContext.getActivity(), e.data());
+                    ExcludedFolderProvider.add(mContext, e.data());
                     mDialog.setProgress(mDialog.getProgress() + 1);
                 }
-                if (mContext.getActivity() != null) {
-                    mContext.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mDialog.dismiss();
-                            finish();
-                            mContext.reload();
-                            ((MainActivity) mContext.getActivity()).reloadNavDrawerAlbums();
-                        }
-                    });
-                }
+                mContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDialog.dismiss();
+                        finish();
+                        mFragment.reload();
+                        mContext.reloadNavDrawerAlbums();
+                    }
+                });
             }
         }).start();
     }
@@ -185,7 +201,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
         for (MediaEntry e : mMediaEntries) {
             if (e.isAlbum()) {
                 AlbumEntry album = (AlbumEntry) e;
-                Collections.addAll(toSend, album.getContents(mContext.getActivity(),
+                Collections.addAll(toSend, album.getContents(mContext,
                         album.bucketId() == AlbumEntry.ALBUM_ID_USEPATH));
             } else {
                 toSend.add(e);
@@ -200,8 +216,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                             .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(toSend.get(0).data())));
                     mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.share_using)));
                 } catch (ActivityNotFoundException e) {
-                    if (mContext.getActivity() != null)
-                        Toast.makeText(mContext.getActivity(), R.string.no_app_complete_action, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.no_app_complete_action, Toast.LENGTH_SHORT).show();
                 }
             } else {
                 ArrayList<Uri> uris = new ArrayList<>();
@@ -224,8 +239,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                             .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
                     mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.share_using)));
                 } catch (ActivityNotFoundException e) {
-                    if (mContext.getActivity() != null)
-                        Toast.makeText(mContext.getActivity(), R.string.no_app_complete_action, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.no_app_complete_action, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -241,7 +255,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
         for (MediaEntry e : mMediaEntries) {
             if (e.isAlbum()) {
                 AlbumEntry album = (AlbumEntry) e;
-                Collections.addAll(toDelete, album.getContents(mContext.getActivity(),
+                Collections.addAll(toDelete, album.getContents(mContext,
                         album.bucketId() == AlbumEntry.ALBUM_ID_USEPATH));
             } else {
                 toDelete.add(e);
@@ -252,7 +266,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
             return;
         }
 
-        final ProgressDialog mDialog = new ProgressDialog(mContext.getActivity());
+        final ProgressDialog mDialog = new ProgressDialog(mContext);
         mDialog.setMessage(mContext.getString(R.string.deleting));
         mDialog.setIndeterminate(false);
         mDialog.setMax(toDelete.size());
@@ -263,20 +277,18 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
             public void run() {
                 for (MediaEntry p : toDelete) {
                     if (!mDialog.isShowing()) break;
-                    p.delete(mContext.getActivity());
+                    p.delete(mContext);
                     mDialog.setProgress(mDialog.getProgress() + 1);
                 }
-                if (mContext.getActivity() != null) {
-                    mContext.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mDialog.dismiss();
-                            finish();
-                            mContext.reload();
-                            ((MainActivity) mContext.getActivity()).reloadNavDrawerAlbums();
-                        }
-                    });
-                }
+                mContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDialog.dismiss();
+                        finish();
+                        mFragment.reload();
+                        mContext.reloadNavDrawerAlbums();
+                    }
+                });
             }
         }).start();
     }
@@ -345,7 +357,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
         for (MediaEntry e : mMediaEntries) {
             if (e.isAlbum()) {
                 AlbumEntry album = (AlbumEntry) e;
-                Collections.addAll(toMove, album.getContents(mContext.getActivity(),
+                Collections.addAll(toMove, album.getContents(mContext,
                         album.bucketId() == AlbumEntry.ALBUM_ID_USEPATH));
             } else {
                 toMove.add(e);
@@ -356,7 +368,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
             return;
         }
 
-        final ProgressDialog mDialog = new ProgressDialog(mContext.getActivity());
+        final ProgressDialog mDialog = new ProgressDialog(mContext);
         mDialog.setMessage(mContext.getString(deleteAfter ? R.string.moving : R.string.copying));
         mDialog.setIndeterminate(false);
         mDialog.setMax(toMove.size());
@@ -366,46 +378,39 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
             @Override
             public void run() {
                 for (MediaEntry p : toMove) {
-                    if (!mDialog.isShowing() || mContext.getActivity() == null)
+                    if (!mDialog.isShowing())
                         break;
                     final File fi = new File(p.data());
                     final File newFi = new File(destDir, fi.getName());
                     try {
-                        performCopy(mContext.getActivity(), p, newFi, deleteAfter);
+                        performCopy(mContext, p, newFi, deleteAfter);
                     } catch (final IOException e) {
                         e.printStackTrace();
-                        if (mContext.getActivity() != null) {
-                            mContext.getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Utils.showErrorDialog(mContext.getActivity(), e);
-                                }
-                            });
-                        }
+                        mContext.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Utils.showErrorDialog(mContext, e);
+                            }
+                        });
                         break;
                     }
                     mDialog.setProgress(mDialog.getProgress() + 1);
                 }
-                if (mContext.getActivity() != null) {
-                    mContext.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            MainActivity act = (MainActivity) mContext.getActivity();
-                            if (act != null) {
-                                act.notifyFoldersChanged();
-                                act.reloadNavDrawerAlbums();
-                            }
-                            mDialog.dismiss();
-                            finish();
-                        }
-                    });
-                }
+                mContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mContext.notifyFoldersChanged();
+                        mContext.reloadNavDrawerAlbums();
+                        mDialog.dismiss();
+                        finish();
+                    }
+                });
             }
         }).start();
     }
 
     private void selectAll() {
-        List<MediaEntry> adapterPics = ((MediaAdapter) mContext.getAdapter()).getMedia().getMedia();
+        List<MediaEntry> adapterPics = ((MediaAdapter) mFragment.getAdapter()).getMedia().getMedia();
         for (MediaEntry p : adapterPics)
             toggleEntry(p, true);
     }
@@ -447,7 +452,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                 excludeEntries();
                 return true;
             case R.id.delete:
-                new MaterialDialog.Builder(mContext.getActivity())
+                new MaterialDialog.Builder(mContext)
                         .content(R.string.delete_bulk_confirm)
                         .positiveText(R.string.yes)
                         .negativeText(R.string.no)
@@ -476,12 +481,12 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                 }
                 return true;
             case R.id.copyTo:
-                mContext.startActivityForResult(new Intent(mContext.getActivity(), MainActivity.class)
+                mContext.startActivityForResult(new Intent(mContext, MainActivity.class)
                         .setAction(MainActivity.ACTION_SELECT_ALBUM)
                         .putExtra("mode", R.id.copyTo), COPY_REQUEST_CODE);
                 return true;
             case R.id.moveTo:
-                mContext.startActivityForResult(new Intent(mContext.getActivity(), MainActivity.class)
+                mContext.startActivityForResult(new Intent(mContext, MainActivity.class)
                         .setAction(MainActivity.ACTION_SELECT_ALBUM)
                         .putExtra("mode", R.id.moveTo), MOVE_REQUEST_CODE);
                 return true;
@@ -490,7 +495,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                 final File file = new File(entry.data());
                 Calendar cal = new GregorianCalendar();
                 cal.setTimeInMillis(entry.dateTaken());
-                new MaterialDialog.Builder(mContext.getActivity())
+                new MaterialDialog.Builder(mContext)
                         .title(R.string.details)
                         .content(Html.fromHtml(mContext.getString(R.string.details_contents,
                                 TimeUtils.toStringLong(cal),
@@ -508,12 +513,12 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
 
     @Override
     public boolean onCabFinished(MaterialCab materialCab) {
-        if (mContext != null && mContext.getActivity() != null) {
-            mContext.mCab = null;
-            MainActivity act = (MainActivity) mContext.getActivity();
-            act.mMediaCab = null;
-            act.mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            ((MediaAdapter) mContext.getAdapter()).clearChecked();
+        if (mContext != null) {
+            mContext.mMediaCab = null;
+            mContext.mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+        if (mFragment != null) {
+            ((MediaAdapter) mFragment.getAdapter()).clearChecked();
         }
         mMediaEntries.clear();
         mCab = null;
