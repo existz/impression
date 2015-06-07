@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.afollestad.impression.views.ImpressionPreferenceCategory
+        android:key="info_category"
+        android:title="@string/info">
+
+        <com.afollestad.impression.views.ImpressionPreference
+            android:key="about"
+            android:summary="@string/about_desc"
+            android:title="@string/about" />
+
+    </com.afollestad.impression.views.ImpressionPreferenceCategory>
+
+    <com.afollestad.impression.views.ImpressionPreferenceCategory
+        android:key="behavior_category"
+        android:title="@string/behavior">
+
+        <CheckBoxPreference
+            android:key="toolbar_album_stats"
+            android:layout="@layout/preference_custom"
+            android:persistent="true"
+            android:summary="@string/toolbar_stats_desc"
+            android:title="@string/toolbar_stats"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="overview_mode"
+            android:layout="@layout/preference_custom"
+            android:persistent="false"
+            android:summary="@string/overview_mode_desc"
+            android:title="@string/overview_display" />
+
+    </com.afollestad.impression.views.ImpressionPreferenceCategory>
+
+    <com.afollestad.impression.views.ImpressionPreferenceCategory
+        android:key="theme_category"
+        android:title="@string/theme">
+
+        <CheckBoxPreference
+            android:key="dark_theme"
+            android:layout="@layout/preference_custom"
+            android:persistent="true"
+            android:summary="@string/dark_mode_desc"
+            android:title="@string/dark_mode" />
+
+        <com.afollestad.impression.views.ImpressionPreference
+            android:key="primary_color"
+            android:summary="@string/primary_color_desc"
+            android:title="@string/primary_color" />
+
+        <com.afollestad.impression.views.ImpressionPreference
+            android:key="accent_color"
+            android:summary="@string/accent_color_desc"
+            android:title="@string/accent_color" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="colored_navbar"
+            android:layout="@layout/preference_custom"
+            android:persistent="true"
+            android:summary="@string/colored_navbar_desc"
+            android:title="@string/colored_navbar" />
+
+    </com.afollestad.impression.views.ImpressionPreferenceCategory>
+
+    <com.afollestad.impression.views.ImpressionPreferenceCategory
+        android:key="included_folder_category"
+        android:title="@string/included_folders">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="include_subfolders_included"
+            android:layout="@layout/preference_custom"
+            android:persistent="true"
+            android:summary="@string/include_subfolders_included_desc"
+            android:title="@string/include_subfolders" />
+
+    </com.afollestad.impression.views.ImpressionPreferenceCategory>
+
+    <com.afollestad.impression.views.ImpressionPreferenceCategory
+        android:key="excluded_album_category"
+        android:title="@string/excluded_folders">
+
+        <com.afollestad.impression.views.ImpressionPreference
+            android:key="excluded_folders"
+            android:summary="@string/excluded_folders_desc"
+            android:title="@string/excluded_folders" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="include_subfolders"
+            android:layout="@layout/preference_custom"
+            android:persistent="true"
+            android:summary="@string/include_subfolders_desc"
+            android:title="@string/include_subfolders" />
+
+    </com.afollestad.impression.views.ImpressionPreferenceCategory>
+
+</PreferenceScreen>

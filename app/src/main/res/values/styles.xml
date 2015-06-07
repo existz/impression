@@ -1,0 +1,88 @@
+<resources>
+
+    <style name="_ParentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:actionModeBackground">@color/dark_theme_gray_lighter</item>
+        <item name="colorAccent">@android:color/black</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="nav_drawer_background">@android:color/white</item>
+        <item name="grid_item_text_primary">?android:textColorPrimaryInverse</item>
+        <item name="grid_item_text_secondary">?android:textColorSecondaryInverse</item>
+        <item name="themed_divider">@color/md_divider_black</item>
+        <item name="empty_text_color">@android:color/black</item>
+
+        <item name="popup_theme">@style/ThemeOverlay.AppCompat.Light</item>
+
+        <item name="editor_option_selector">@drawable/editor_option_selector</item>
+        <item name="grid_selector">@drawable/grid_selector</item>
+        <item name="list_selector">@drawable/list_selector</item>
+        <item name="menu_selector">@drawable/menu_selector</item>
+        <item name="video_overlay_selector">@drawable/video_overlay_selector</item>
+        <item name="default_image_background">@android:color/white</item>
+        <item name="empty_image_background">@color/material_indigo_100</item>
+
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.ActionButton.Overflow</item>
+    </style>
+
+    <style name="_ParentThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:actionModeBackground">@color/dark_theme_gray_lighter</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:windowBackground">@color/dark_theme_gray_lighter</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="nav_drawer_background">@color/nav_drawer_dark</item>
+        <item name="grid_item_text_primary">?android:textColorPrimary</item>
+        <item name="grid_item_text_secondary">?android:textColorSecondary</item>
+        <item name="themed_divider">@color/md_divider_white</item>
+        <item name="empty_text_color">@android:color/white</item>
+
+        <item name="popup_theme">@style/ThemeOverlay.AppCompat</item>
+        <item name="md_dark_theme">true</item>
+
+        <item name="editor_option_selector">@drawable/editor_option_selector</item>
+        <item name="grid_selector">@drawable/grid_selector_dark</item>
+        <item name="list_selector">@drawable/list_selector_dark</item>
+        <item name="menu_selector">@drawable/menu_selector_dark</item>
+        <item name="video_overlay_selector">@drawable/video_overlay_selector</item>
+        <item name="default_image_background">@color/nav_drawer_dark</item>
+        <item name="empty_image_background">@color/nav_drawer_dark</item>
+
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.ActionButton.Overflow</item>
+    </style>
+
+    <style name="AppTheme" parent="@style/_ParentTheme" />
+
+    <style name="AppTheme.Dark" parent="@style/_ParentThemeDark" />
+
+    <style name="AppTheme.Viewer" parent="@style/_ParentTheme">
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="AppTheme.Viewer.Dark" parent="@style/_ParentThemeDark">
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="AppTheme.Settings" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@android:color/black</item>
+    </style>
+
+    <style name="AppTheme.Settings.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:windowBackground">@color/dark_theme_gray</item>
+        <item name="md_dark_theme">true</item>
+    </style>
+
+    <style name="Widget.ActionButton.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:contentDescription">@string/abc_action_menu_overflow_description</item>
+    </style>
+
+    <style name="ToolbarSubtitleStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#80ffffff</item>
+    </style>
+
+</resources>

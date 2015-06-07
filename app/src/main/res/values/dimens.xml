@@ -1,0 +1,33 @@
+<resources>
+
+    <dimen name="nav_drawer_width_limit">320dp</dimen>
+    <dimen name="nav_drawer_margin">56dp</dimen>
+    <dimen name="nav_drawer_textsize">14sp</dimen>
+
+    <dimen name="grid_folder_image_padding">16dp</dimen>
+    <dimen name="grid_spacing">2dp</dimen>
+    <dimen name="grid_spacing_list">16dp</dimen>
+    <!-- grid_spacing_list - grid_spacing -->
+    <dimen name="grid_spacing_compound">14dp</dimen>
+    <dimen name="list_item_image_size">44dp</dimen>
+    <!-- grid_spacing_list + list_item_image_size -->
+    <dimen name="list_item_divider_margin">56dp</dimen>
+    <dimen name="editor_control_height">72dp</dimen>
+    <dimen name="editor_control_width">96dp</dimen>
+    <dimen name="editor_control_icon">32dp</dimen>
+    <dimen name="editor_control_text">14sp</dimen>
+    <dimen name="circle_view_border">1dp</dimen>
+    <dimen name="circle_view_check">24dp</dimen>
+    <dimen name="grid_titleframe_height">42dp</dimen>
+    <dimen name="shadow_height">5dp</dimen>
+    <dimen name="toolbar_inset">72dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+
+    <dimen name="breadcrumb_height">42dp</dimen>
+    <dimen name="breadcrumb_padding_side">4dp</dimen>
+    <dimen name="breadcrumb_fontsize">14sp</dimen>
+    <dimen name="breadcrumb_arrow_size">18dp</dimen>
+    <dimen name="breadcrumb_arrow_margin">8dp</dimen>
+    <dimen name="breadcrumb_layout_margin">68dp</dimen>
+
+</resources>

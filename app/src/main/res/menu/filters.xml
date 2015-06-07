@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/grayscale"
+        android:title="@string/grayscale"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sepia"
+        android:title="@string/sepia"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/documentary"
+        android:title="@string/documentary"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/posterize"
+        android:title="@string/posterize"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/crossprocess"
+        android:title="@string/crossprocess"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/duotone"
+        android:title="@string/duotone"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filllight"
+        android:title="@string/filllight"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/fisheye"
+        android:title="@string/fisheye"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/grain"
+        android:title="@string/grain"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/lomoish"
+        android:title="@string/lomoish"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/negative"
+        android:title="@string/negative"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/temperature"
+        android:title="@string/temperature"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/tint"
+        android:title="@string/tint"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/vignette"
+        android:title="@string/vignette"
+        app:showAsAction="never" />
+</menu>

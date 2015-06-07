@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Impression</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="overview">Overview</string>
+    <string name="no_photosorvideos">No photos or videos here!</string>
+    <string name="no_photos">No photos here!</string>
+    <string name="no_videos">No videos here!</string>
+    <string name="sort">Sort</string>
+    <string name="set_as">Set as…</string>
+    <string name="print">Print</string>
+    <string name="details">Details</string>
+    <string name="share">Share</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="delete_confirm_photo">Delete this photo?</string>
+    <string name="delete_confirm_video">Delete this video?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="about">About</string>
+    <string name="about_body"><![CDATA[
+        <b>Impression</b>, a beautiful gallery replacement designed by <b>Aidan Follestad</b>.<br/>
+        <a href=\'http://aidanfollestad.com\'>Website</a>&nbsp;&nbsp;
+        <a href=\'https://twitter.com/afollestad\'>Twitter</a>&nbsp;&nbsp;
+        <a href=\'https://google.com/+AidanFollestad\'>Google+</a>&nbsp;&nbsp;
+        <a href=\'https://github.com/afollestad\'>GitHub</a>&nbsp;&nbsp;
+        <a href=\'https://www.linkedin.com/in/afollestad\'>LinkedIn</a><br/><br/>
+        Launcher icon and Google Play feature graphic designed by <a href=\'https://plus.google.com/112332148992467376978\'>Александр Карпилович</a>.
+    ]]></string>
+    <string name="dismiss">Dismiss</string>
+
+    <string name="details_contents"><![CDATA[
+        <b>Date taken:</b>&nbsp;&nbsp;%1$s<br/>
+        <b>Dimensions:</b>&nbsp;&nbsp;%2$s<br/>
+        <b>File name:</b>&nbsp;&nbsp;%3$s<br/>
+        <b>File size:</b>&nbsp;&nbsp;%4$s<br/>
+        <b>File path:</b>&nbsp;&nbsp;%5$s
+    ]]></string>
+    <string name="deleting">Deleting…</string>
+    <string name="selectAll">Select All</string>
+    <string name="delete_bulk_confirm">Are you sure you want to delete the selected items?</string>
+    <string name="include_folder">Include a Folder…</string>
+    <string name="pick_something">Pick something…</string>
+    <string name="choose">Choose</string>
+    <string name="filter">Filter</string>
+    <string name="videos">Videos</string>
+    <string name="photos">Photos</string>
+    <string name="all">All</string>
+    <string name="confirm_folder_remove"><![CDATA[
+        Remove the included folder <b>%1$s</b>?
+    ]]></string>
+    <string name="confirm_exclude_album"><![CDATA[
+        Exclude the folder <b>%1$s</b>?
+    ]]></string>
+    <string name="confirm_exclude_album_remove"><![CDATA[
+        Remove <b>%1$s</b> from your excluded folders?
+    ]]></string>
+    <string name="filtering_photos">Filter: Photos</string>
+    <string name="filtering_videos">Filter: Videos</string>
+    <string name="explorer_mode">Explorer Mode</string>
+    <string name="local">Local</string>
+    <string name="google_drive">Google Drive</string>
+    <string name="dropbox">Dropbox</string>
+    <string name="add_account">Add an account…</string>
+    <string name="accounts">Accounts</string>
+    <string name="view_mode">View Mode</string>
+    <string name="folder">Folder</string>
+    <string name="error">Error</string>
+    <string name="no_app_complete_action">No apps were found that can complete this action…</string>
+
+    <string name="impression_editor">Impression Editor (Preview)</string>
+
+    <string name="save">Save</string>
+    <string name="autofix">Autofix</string>
+    <string name="crop">Crop</string>
+    <string name="flip">Flip</string>
+    <string name="filters">Filters</string>
+    <string name="rotate_left">Rotate Left</string>
+    <string name="rotate_right">Rotate Right</string>
+    <string name="flip_vertical">Flip Vertical</string>
+    <string name="flip_horizontal">Flip Horizontal</string>
+
+    <string name="brightness">Brightness</string>
+    <string name="contrast">Contrast</string>
+    <string name="crossprocess">Cross Process</string>
+    <string name="documentary">Documentary</string>
+    <string name="duotone">Duo Tone</string>
+    <string name="filllight">Fill Light</string>
+    <string name="fisheye">Fish Eye</string>
+    <string name="grain">Grain</string>
+    <string name="grayscale">Black &amp; White</string>
+    <string name="lomoish">Lomoish</string>
+    <string name="negative">Negative</string>
+    <string name="posterize">Posterize</string>
+    <string name="rotate">Rotate</string>
+    <string name="saturate">Saturate</string>
+    <string name="sepia">Sepia</string>
+    <string name="sharpen">Sharpen</string>
+    <string name="temperature">Temperature</string>
+    <string name="tint">Tint</string>
+
+    <string name="vignette">Vignette</string>
+    <string name="about_dialog_title">Impression %1$s</string>
+    <string name="info">Info</string>
+    <string name="about_desc">About the app, its developer, its contributors, etc.</string>
+
+    <string name="overview_display">Overview All Media Mode</string>
+    <string name="overview_mode_desc">When enabled, the overview screen will display a continuous list of all media rather than albums.</string>
+    <string name="settings">Settings</string>
+    <string name="name_asc">Name ascend</string>
+    <string name="modified_desc">Date descend</string>
+    <string name="modified_asc">Date ascend</string>
+    <string name="name_desc">Name descend</string>
+    <string name="excluded_folders">Excluded Albums</string>
+    <string name="excluded_folders_desc">Edit the albums that will not be shown in the application.</string>
+    <string name="draw">Draw</string>
+    <string name="copy_to">Copy To…</string>
+    <string name="move_to">Move To…</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode_desc">This will make the background of the app dark, and the default theme colors dark.</string>
+    <string name="no_excluded_folders">No albums have been excluded yet!</string>
+    <string name="add">Add</string>
+    <string name="go_up">Go up…</string>
+    <string name="copying">Copying…</string>
+    <string name="moving">Moving…</string>
+    <string name="download">Download</string>
+    <string name="include_subfolders">Include Subfolders</string>
+    <string name="include_subfolders_desc">Whether or not to also exclude the subfolders of excluded albums.</string>
+    <string name="include_subfolders_included_desc">When viewing included folders, whether or not media of subfolders are also shown (when explorer mode is off).</string>
+    <string name="choose_album">Choose an album…</string>
+    <string name="invalid_file_path_error">This file does not exist or Impression does not have permission to access it.</string>
+    <string name="included_folders">Included Folders</string>
+    <string name="defaultStr">Default</string>
+    <string name="primary_color">Primary Color</string>
+    <string name="primary_color_desc">The primary theme color to use. Defaults to Material indigo or a shade of gray based on the theme.</string>
+    <string name="accent_color">Accent Color</string>
+    <string name="accent_color_desc">The accent theme color to use. Defaults to Material pink.</string>
+    <string name="theme">Theme</string>
+    <string name="remember_for_directory">Remember for directory</string>
+    <string name="exclude">Exclude</string>
+    <string name="exclude_prompt_single">Exclude the selected album?</string>
+    <string name="exclude_prompt">Exclude %1$d albums?</string>
+    <string name="excluding">Excluding…</string>
+    <string name="open_permission_error">Impression does not have permission to access the requested media file.</string>
+    <string name="slideshow">Slideshow</string>
+    <string name="start">Start</string>
+    <string name="slideshow_loop">Slideshow will loop</string>
+    <string name="slideshow_seeklabel">%1$d seconds between each slide</string>
+    <string name="slideshow_seeklabel_single">1 second between each slide</string>
+    <string name="colored_navbar">Colored Navigation Bar</string>
+    <string name="colored_navbar_desc">Whether or not the system navigation bar is colored with the primary color.</string>
+    <string name="whats_new">What\'s New</string>
+    <string name="root">Root</string>
+    <string name="internal_storage">Internal Storage</string>
+
+    <string-array name="account_options">
+        <item>@string/google_drive</item>
+        <item>@string/dropbox</item>
+    </string-array>
+
+    <string name="grid_size">Grid Size</string>
+    <string name="one_num">1</string>
+    <string name="two_num">2</string>
+    <string name="three_num">3</string>
+    <string name="four_num">4</string>
+    <string name="five_num">5</string>
+    <string name="six_num">6</string>
+
+    <string name="one_photo">1 photo</string>
+    <string name="one_video">1 video</string>
+    <string name="one_folder">1 folder</string>
+    <string name="one_album">1 album</string>
+    <string name="x_photos">%1$d photos</string>
+    <string name="x_videos">%1$d videos</string>
+    <string name="x_folders">%1$d folders</string>
+    <string name="x_albums">%1$d albums</string>
+
+    <string name="behavior">Behavior</string>
+    <string name="toolbar_stats">Toolbar Album Stats</string>
+    <string name="toolbar_stats_desc">Display the number of photos and videos in an album in the toolbar.</string>
+    <string name="empty">empty</string>
+
+</resources>

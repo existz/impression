@@ -1,0 +1,6 @@
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#959595">
+
+    <item android:drawable="@drawable/video_overlay_selector" />
+
+</ripple>

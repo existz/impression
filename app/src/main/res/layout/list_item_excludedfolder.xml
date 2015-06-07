@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="56dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/viewFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:paddingBottom="16dp"
+        android:paddingEnd="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="8dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/icon"
+            android:layout_toStartOf="@+id/icon"
+            android:ellipsize="middle"
+            android:fontFamily="sans-serif"
+            android:singleLine="true"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
+            tools:text="Content" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_action_discard"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:listDivider" />
+
+</LinearLayout>

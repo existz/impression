@@ -1,0 +1,95 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/choose"
+        android:icon="@drawable/ic_action_done"
+        android:title="@string/choose"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/filter"
+        android:icon="@drawable/ic_action_filter"
+        android:title="@string/filter"
+        app:showAsAction="ifRoom">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/filterAll"
+                    android:title="@string/all" />
+                <item
+                    android:id="@+id/filterPhotos"
+                    android:title="@string/photos" />
+                <item
+                    android:id="@+id/filterVideos"
+                    android:title="@string/videos" />
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/viewMode"
+        android:icon="@drawable/ic_action_view_grid"
+        android:title="@string/view_mode"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/sort"
+        android:title="@string/sort">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/sortNameAsc"
+                    android:title="@string/name_asc" />
+                <item
+                    android:id="@+id/sortNameDesc"
+                    android:title="@string/name_desc" />
+                <item
+                    android:id="@+id/sortModifiedAsc"
+                    android:title="@string/modified_asc" />
+                <item
+                    android:id="@+id/sortModifiedDesc"
+                    android:title="@string/modified_desc" />
+            </group>
+            <item
+                android:id="@+id/sortCurrentDir"
+                android:checkable="true"
+                android:title="@string/remember_for_directory" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/gridSize"
+        android:title="@string/grid_size">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/gridSizeOne"
+                    android:title="@string/one_num" />
+                <item
+                    android:id="@+id/gridSizeTwo"
+                    android:title="@string/two_num" />
+                <item
+                    android:id="@+id/gridSizeThree"
+                    android:title="@string/three_num" />
+                <item
+                    android:id="@+id/gridSizeFour"
+                    android:title="@string/four_num" />
+                <item
+                    android:id="@+id/gridSizeFive"
+                    android:title="@string/five_num" />
+                <item
+                    android:id="@+id/gridSizeSix"
+                    android:title="@string/six_num" />
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/viewExplorer"
+        android:checkable="true"
+        android:title="@string/explorer_mode" />
+
+</menu>

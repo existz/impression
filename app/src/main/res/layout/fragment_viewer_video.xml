@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.afollestad.impression.views.ImpressionVideoView
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+    <FrameLayout
+        android:id="@+id/playFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_play"
+            tools:ignore="ContentDescription" />
+
+        <RelativeLayout
+            android:id="@+id/seekerFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:paddingBottom="12dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="12dp">
+
+            <!--suppress AndroidDomInspection -->
+            <TextView
+                android:id="@+id/position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:textStyle="@integer/font_textStyle_medium"
+                android:textSize="16sp"
+                android:textColor="#fff"
+                tools:text="1:12" />
+
+            <SeekBar
+                android:id="@+id/seeker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/duration"
+                android:layout_toEndOf="@+id/duration"
+                android:layout_toRightOf="@+id/position"
+                android:layout_toStartOf="@+id/position" />
+
+            <!--suppress AndroidDomInspection -->
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:textStyle="@integer/font_textStyle_medium"
+                android:textSize="16sp"
+                android:textColor="#fff"
+                tools:text="2:00" />
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@android:id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</FrameLayout>

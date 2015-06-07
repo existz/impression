@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="default_image_background" format="color" />
+    <attr name="empty_image_background" format="color" />
+    <attr name="themed_divider" format="color" />
+    <attr name="nav_drawer_background" format="color" />
+    <attr name="grid_item_text_primary" format="color" />
+    <attr name="grid_item_text_secondary" format="color" />
+    <attr name="empty_text_color" format="color" />
+
+    <attr name="popup_theme" format="reference" />
+
+    <attr name="editor_option_selector" format="reference" />
+    <attr name="grid_selector" format="reference" />
+    <attr name="list_selector" format="reference" />
+    <attr name="menu_selector" format="reference" />
+    <attr name="video_overlay_selector" format="reference" />
+
+</resources>

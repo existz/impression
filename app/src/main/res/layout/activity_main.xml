@@ -1,0 +1,98 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/toolbar_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:elevation="@dimen/toolbar_elevation"
+            android:orientation="vertical"
+            android:transitionName="Toolbar"
+            tools:ignore="UnusedAttribute">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@null"
+                app:contentInsetStart="@dimen/toolbar_inset"
+                app:popupTheme="?popup_theme"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+            <com.afollestad.impression.views.BreadCrumbLayout
+                android:id="@+id/breadCrumbs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/breadcrumb_layout_margin"
+                android:paddingStart="@dimen/breadcrumb_layout_margin"
+                android:paddingRight="@dimen/breadcrumb_arrow_margin"
+                android:paddingEnd="@dimen/breadcrumb_arrow_margin"
+                android:paddingTop="-48dp"
+                tools:ignore="NewApi,RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textAllCaps="true"
+                android:gravity="center_vertical|start"
+                android:paddingBottom="16dp"
+                android:paddingLeft="72dp"
+                android:paddingStart="72dp"
+                android:paddingRight="16dp"
+                android:paddingEnd="16dp"
+                android:visibility="gone"
+                tools:ignore="NewApi" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/shadow_height"
+                android:background="@drawable/toolbar_shadow" />
+
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/nav_drawer_frame"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/navigation_drawer"
+            android:name="com.afollestad.impression.fragments.NavDrawerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="NAV_DRAWER"
+            tools:layout="@layout/fragment_navdrawer" />
+
+    </FrameLayout>
+
+</android.support.v4.widget.DrawerLayout>

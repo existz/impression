@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@drawable/transparent"
+        android:elevation="@dimen/toolbar_elevation"
+        app:contentInsetStart="@dimen/toolbar_inset"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        tools:ignore="UnusedAttribute" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/shadow_height"
+            android:background="@drawable/toolbar_shadow" />
+
+        <android.opengl.GLSurfaceView
+            android:id="@+id/effectsview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/editControls"
+            android:layout_centerInParent="true" />
+
+        <!--<com.afollestad.impression.ui.editor.cropwindow.CropOverlayView-->
+        <!--android:id="@+id/cropView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@+id/editControls"-->
+        <!--android:layout_centerInParent="true" />-->
+
+        <RelativeLayout
+            android:id="@+id/seekerFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/editControls"
+            android:background="@color/editor_option_background"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/seekbarLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/dark_vanilla_gray"
+                android:textSize="@dimen/editor_control_text" />
+
+            <SeekBar
+                android:id="@+id/seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/saveEffect"
+                android:layout_toRightOf="@+id/seekbarLabel"
+                android:layout_toEndOf="@+id/saveEffect"
+                android:layout_toStartOf="@+id/saveEffect" />
+
+            <ImageButton
+                android:id="@+id/saveEffect"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?android:actionBarItemBackground"
+                android:src="@drawable/ic_action_done_dark"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/editControls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/vertical_divider_dark"
+                android:orientation="horizontal"
+                android:showDividers="middle">
+
+                <LinearLayout
+                    android:id="@+id/edit_autofix"
+                    android:layout_width="@dimen/editor_control_width"
+                    android:layout_height="@dimen/editor_control_height"
+                    android:background="?editor_option_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/editor_control_icon"
+                        android:layout_height="@dimen/editor_control_icon"
+                        android:src="@drawable/ic_autofix"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/autofix"
+                        android:textColor="@color/dark_vanilla_gray"
+                        android:textSize="@dimen/editor_control_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_filters"
+                    android:layout_width="@dimen/editor_control_width"
+                    android:layout_height="@dimen/editor_control_height"
+                    android:background="?editor_option_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/editor_control_icon"
+                        android:layout_height="@dimen/editor_control_icon"
+                        android:src="@drawable/ic_effect_filter"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/filters"
+                        android:textColor="@color/dark_vanilla_gray"
+                        android:textSize="@dimen/editor_control_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_draw"
+                    android:layout_width="@dimen/editor_control_width"
+                    android:layout_height="@dimen/editor_control_height"
+                    android:background="?editor_option_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/editor_control_icon"
+                        android:layout_height="@dimen/editor_control_icon"
+                        android:src="@drawable/ic_draw"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/draw"
+                        android:textColor="@color/dark_vanilla_gray"
+                        android:textSize="@dimen/editor_control_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_crop"
+                    android:layout_width="@dimen/editor_control_width"
+                    android:layout_height="@dimen/editor_control_height"
+                    android:background="?editor_option_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/editor_control_icon"
+                        android:layout_height="@dimen/editor_control_icon"
+                        android:src="@drawable/ic_crop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/crop"
+                        android:textColor="@color/dark_vanilla_gray"
+                        android:textSize="@dimen/editor_control_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_rotate"
+                    android:layout_width="@dimen/editor_control_width"
+                    android:layout_height="@dimen/editor_control_height"
+                    android:background="?editor_option_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/editor_control_icon"
+                        android:layout_height="@dimen/editor_control_icon"
+                        android:src="@drawable/ic_rotate_right"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/rotate"
+                        android:textColor="@color/dark_vanilla_gray"
+                        android:textSize="@dimen/editor_control_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_flip"
+                    android:layout_width="@dimen/editor_control_width"
+                    android:layout_height="@dimen/editor_control_height"
+                    android:background="?editor_option_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/editor_control_icon"
+                        android:layout_height="@dimen/editor_control_icon"
+                        android:src="@drawable/ic_flip"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/flip"
+                        android:textColor="@color/dark_vanilla_gray"
+                        android:textSize="@dimen/editor_control_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_brightness"
+                    android:layout_width="@dimen/editor_control_width"
+                    android:layout_height="@dimen/editor_control_height"
+                    android:background="?editor_option_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/editor_control_icon"
+                        android:layout_height="@dimen/editor_control_icon"
+                        android:src="@drawable/ic_brightness"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/brightness"
+                        android:textColor="@color/dark_vanilla_gray"
+                        android:textSize="@dimen/editor_control_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_contrast"
+                    android:layout_width="@dimen/editor_control_width"
+                    android:layout_height="@dimen/editor_control_height"
+                    android:background="?editor_option_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/editor_control_icon"
+                        android:layout_height="@dimen/editor_control_icon"
+                        android:src="@drawable/ic_contrast"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/contrast"
+                        android:textColor="@color/dark_vanilla_gray"
+                        android:textSize="@dimen/editor_control_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_saturation"
+                    android:layout_width="@dimen/editor_control_width"
+                    android:layout_height="@dimen/editor_control_height"
+                    android:background="?editor_option_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/editor_control_icon"
+                        android:layout_height="@dimen/editor_control_icon"
+                        android:src="@drawable/ic_saturate"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/saturate"
+                        android:textColor="@color/dark_vanilla_gray"
+                        android:textSize="@dimen/editor_control_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_sharpen"
+                    android:layout_width="@dimen/editor_control_width"
+                    android:layout_height="@dimen/editor_control_height"
+                    android:background="?editor_option_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/editor_control_icon"
+                        android:layout_height="@dimen/editor_control_icon"
+                        android:src="@drawable/ic_sharpener"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/sharpen"
+                        android:textColor="@color/dark_vanilla_gray"
+                        android:textSize="@dimen/editor_control_text" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+</LinearLayout>
