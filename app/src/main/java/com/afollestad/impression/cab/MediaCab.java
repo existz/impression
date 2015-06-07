@@ -1,6 +1,5 @@
 package com.afollestad.impression.cab;
 
-import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -9,12 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -29,6 +28,7 @@ import com.afollestad.impression.ui.MainActivity;
 import com.afollestad.impression.ui.viewer.ViewerActivity;
 import com.afollestad.impression.utils.TimeUtils;
 import com.afollestad.impression.utils.Utils;
+import com.afollestad.materialcab.MaterialCab;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
@@ -47,11 +47,11 @@ import java.util.List;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MediaCab implements ActionMode.Callback, Serializable {
+public class MediaCab implements Serializable, MaterialCab.Callback {
 
     private final transient MediaFragment mContext;
     private final List<MediaEntry> mMediaEntries;
-    private ActionMode mActionMode;
+    private MaterialCab mCab;
 
     public final static int COPY_REQUEST_CODE = 8000;
     public final static int MOVE_REQUEST_CODE = 9000;
@@ -74,7 +74,11 @@ public class MediaCab implements ActionMode.Callback, Serializable {
         MainActivity act = (MainActivity) mContext.getActivity();
         act.mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         act.mMediaCab = this;
-        act.mToolbar.startActionMode(this);
+        mCab = new MaterialCab(act, R.id.cab_stub)
+                .setMenu(R.menu.cab)
+                .setBackgroundColor(act.primaryColor())
+                .setCloseDrawableRes(R.drawable.ic_action_discard)
+                .start(this);
 
         if (mMediaEntries.size() > 0) {
             for (MediaEntry e : mMediaEntries)
@@ -82,19 +86,31 @@ public class MediaCab implements ActionMode.Callback, Serializable {
         }
     }
 
+    public void saveState(Bundle out) {
+        mCab.saveState(out);
+    }
+
+    public void restoreState(Bundle in) {
+        mCab = MaterialCab.restoreState(in, (AppCompatActivity) mContext.getActivity(), this);
+    }
+
     public boolean isStarted() {
-        return mActionMode != null;
+        return mCab != null && mCab.isActive();
     }
 
     private void invalidate() {
-        if (mMediaEntries.size() == 0) finish();
-        else if (mActionMode != null) mActionMode.invalidate();
+        if (mMediaEntries.size() == 0)
+            finish();
+        else if (mMediaEntries.size() == 1)
+            mCab.setTitle(mMediaEntries.get(0).title());
+        else
+            mCab.setTitle(mMediaEntries.size() + "");
     }
 
     public void finish() {
-        if (mActionMode != null) {
-            mActionMode.finish();
-            mActionMode = null;
+        if (mCab != null) {
+            mCab.finish();
+            mCab = null;
         }
     }
 
@@ -116,121 +132,6 @@ public class MediaCab implements ActionMode.Callback, Serializable {
             mMediaEntries.add(p);
         ((MediaAdapter) mContext.getAdapter()).setItemChecked(p, forceCheckOn || !found);
         invalidate();
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        mActionMode = mode;
-        MainActivity act = (MainActivity) mContext.getActivity();
-        if (act != null) {
-            act.invalidateStatusColor();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                final int darkGray = act.getResources().getColor(R.color.dark_theme_gray_lighter);
-                act.getWindow().setStatusBarColor(darkGray);
-                if (act.isColoredNavBar())
-                    act.getWindow().setNavigationBarColor(darkGray);
-            }
-            mode.getMenuInflater().inflate(R.menu.cab, menu);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        mode.setTitle(mMediaEntries.size() + "");
-        boolean foundDir = false;
-        boolean allAlbumsOrFolders = true;
-        for (MediaEntry e : mMediaEntries) {
-            if (!e.isAlbum() && !e.isFolder()) allAlbumsOrFolders = false;
-            if (e.isFolder()) {
-                foundDir = true;
-                break;
-            }
-        }
-
-        menu.findItem(R.id.share).setVisible(!foundDir);
-        menu.findItem(R.id.exclude).setVisible(allAlbumsOrFolders);
-        if (mMediaEntries.size() > 0) {
-            MediaEntry firstEntry = mMediaEntries.get(0);
-            boolean canShow = mMediaEntries.size() == 1 && !firstEntry.isVideo() && !firstEntry.isAlbum();
-            menu.findItem(R.id.edit).setVisible(canShow);
-            menu.findItem(R.id.details).setVisible(canShow);
-        } else {
-            menu.findItem(R.id.edit).setVisible(false);
-            menu.findItem(R.id.details).setVisible(false);
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean onActionItemClicked(ActionMode mode, final MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.share:
-                shareEntries();
-                return true;
-            case R.id.exclude:
-                excludeEntries();
-                return true;
-            case R.id.delete:
-                new MaterialDialog.Builder(mContext.getActivity())
-                        .content(R.string.delete_bulk_confirm)
-                        .positiveText(R.string.yes)
-                        .negativeText(R.string.no)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog materialDialog) {
-                                deleteEntries();
-                            }
-
-                            @Override
-                            public void onNegative(MaterialDialog materialDialog) {
-                            }
-                        }).build().show();
-                return true;
-            case R.id.selectAll:
-                selectAll();
-                return true;
-            case R.id.edit:
-                try {
-                    Uri uri = Uri.fromFile(new File(mMediaEntries.get(0).data()));
-                    mContext.startActivity(new Intent(Intent.ACTION_EDIT)
-                            .setDataAndType(uri, "image/*"));
-                    finish();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return true;
-            case R.id.copyTo:
-                mContext.startActivityForResult(new Intent(mContext.getActivity(), MainActivity.class)
-                        .setAction(MainActivity.ACTION_SELECT_ALBUM)
-                        .putExtra("mode", R.id.copyTo), COPY_REQUEST_CODE);
-                return true;
-            case R.id.moveTo:
-                mContext.startActivityForResult(new Intent(mContext.getActivity(), MainActivity.class)
-                        .setAction(MainActivity.ACTION_SELECT_ALBUM)
-                        .putExtra("mode", R.id.moveTo), MOVE_REQUEST_CODE);
-                return true;
-            case R.id.details:
-                final MediaEntry entry = mMediaEntries.get(0);
-                final File file = new File(entry.data());
-                Calendar cal = new GregorianCalendar();
-                cal.setTimeInMillis(entry.dateTaken());
-                new MaterialDialog.Builder(mContext.getActivity())
-                        .title(R.string.details)
-                        .content(Html.fromHtml(mContext.getString(R.string.details_contents,
-                                TimeUtils.toStringLong(cal),
-                                entry.width() + " x " + entry.height(),
-                                file.getName(),
-                                Utils.readableFileSize(file.length()),
-                                file.getAbsolutePath())))
-                        .contentLineSpacing(1.6f)
-                        .positiveText(R.string.dismiss)
-                        .show();
-                return true;
-        }
-        return false;
     }
 
     private void excludeEntries() {
@@ -465,7 +366,7 @@ public class MediaCab implements ActionMode.Callback, Serializable {
             @Override
             public void run() {
                 for (MediaEntry p : toMove) {
-                    if (!mDialog.isShowing() || mContext == null || mContext.getActivity() == null)
+                    if (!mDialog.isShowing() || mContext.getActivity() == null)
                         break;
                     final File fi = new File(p.data());
                     final File newFi = new File(destDir, fi.getName());
@@ -510,22 +411,112 @@ public class MediaCab implements ActionMode.Callback, Serializable {
     }
 
     @Override
-    public void onDestroyActionMode(ActionMode mode) {
+    public boolean onCabCreated(MaterialCab materialCab, Menu menu) {
+        materialCab.setTitle(mMediaEntries.size() + "");
+        boolean foundDir = false;
+        boolean allAlbumsOrFolders = true;
+        for (MediaEntry e : mMediaEntries) {
+            if (!e.isAlbum() && !e.isFolder()) allAlbumsOrFolders = false;
+            if (e.isFolder()) {
+                foundDir = true;
+                break;
+            }
+        }
+
+        menu.findItem(R.id.share).setVisible(!foundDir);
+        menu.findItem(R.id.exclude).setVisible(allAlbumsOrFolders);
+        if (mMediaEntries.size() > 0) {
+            MediaEntry firstEntry = mMediaEntries.get(0);
+            boolean canShow = mMediaEntries.size() == 1 && !firstEntry.isVideo() && !firstEntry.isAlbum();
+            menu.findItem(R.id.edit).setVisible(canShow);
+            menu.findItem(R.id.details).setVisible(canShow);
+        } else {
+            menu.findItem(R.id.edit).setVisible(false);
+            menu.findItem(R.id.details).setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onCabItemClicked(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.share:
+                shareEntries();
+                return true;
+            case R.id.exclude:
+                excludeEntries();
+                return true;
+            case R.id.delete:
+                new MaterialDialog.Builder(mContext.getActivity())
+                        .content(R.string.delete_bulk_confirm)
+                        .positiveText(R.string.yes)
+                        .negativeText(R.string.no)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog materialDialog) {
+                                deleteEntries();
+                            }
+
+                            @Override
+                            public void onNegative(MaterialDialog materialDialog) {
+                            }
+                        }).build().show();
+                return true;
+            case R.id.selectAll:
+                selectAll();
+                return true;
+            case R.id.edit:
+                try {
+                    Uri uri = Uri.fromFile(new File(mMediaEntries.get(0).data()));
+                    mContext.startActivity(new Intent(Intent.ACTION_EDIT)
+                            .setDataAndType(uri, "image/*"));
+                    finish();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return true;
+            case R.id.copyTo:
+                mContext.startActivityForResult(new Intent(mContext.getActivity(), MainActivity.class)
+                        .setAction(MainActivity.ACTION_SELECT_ALBUM)
+                        .putExtra("mode", R.id.copyTo), COPY_REQUEST_CODE);
+                return true;
+            case R.id.moveTo:
+                mContext.startActivityForResult(new Intent(mContext.getActivity(), MainActivity.class)
+                        .setAction(MainActivity.ACTION_SELECT_ALBUM)
+                        .putExtra("mode", R.id.moveTo), MOVE_REQUEST_CODE);
+                return true;
+            case R.id.details:
+                final MediaEntry entry = mMediaEntries.get(0);
+                final File file = new File(entry.data());
+                Calendar cal = new GregorianCalendar();
+                cal.setTimeInMillis(entry.dateTaken());
+                new MaterialDialog.Builder(mContext.getActivity())
+                        .title(R.string.details)
+                        .content(Html.fromHtml(mContext.getString(R.string.details_contents,
+                                TimeUtils.toStringLong(cal),
+                                entry.width() + " x " + entry.height(),
+                                file.getName(),
+                                Utils.readableFileSize(file.length()),
+                                file.getAbsolutePath())))
+                        .contentLineSpacing(1.6f)
+                        .positiveText(R.string.dismiss)
+                        .show();
+                return true;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onCabFinished(MaterialCab materialCab) {
         if (mContext != null && mContext.getActivity() != null) {
             mContext.mCab = null;
             MainActivity act = (MainActivity) mContext.getActivity();
             act.mMediaCab = null;
-            act.invalidateStatusColor();
             act.mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                final int oldColor = act.primaryColorDark();
-                act.getWindow().setStatusBarColor(act.getResources().getColor(android.R.color.transparent));
-                if (act.isColoredNavBar())
-                    act.getWindow().setNavigationBarColor(oldColor);
-            }
             ((MediaAdapter) mContext.getAdapter()).clearChecked();
         }
         mMediaEntries.clear();
-        mActionMode = null;
+        mCab = null;
+        return true;
     }
 }

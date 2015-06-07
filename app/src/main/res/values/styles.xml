@@ -1,7 +1,6 @@
 <resources>
 
     <style name="_ParentTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:actionModeBackground">@color/dark_theme_gray_lighter</item>
         <item name="colorAccent">@android:color/black</item>
         <item name="android:windowContentOverlay">@null</item>
 
@@ -26,7 +25,6 @@
     </style>
 
     <style name="_ParentThemeDark" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:actionModeBackground">@color/dark_theme_gray_lighter</item>
         <item name="colorAccent">@android:color/white</item>
         <item name="android:windowBackground">@color/dark_theme_gray_lighter</item>
         <item name="android:windowContentOverlay">@null</item>

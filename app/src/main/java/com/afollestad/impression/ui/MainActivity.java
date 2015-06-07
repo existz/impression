@@ -111,17 +111,6 @@ public class MainActivity extends ThemedActivity
         } else {
             view.setVisibility(View.VISIBLE);
             view.setText(status);
-            invalidateStatusColor();
-        }
-    }
-
-    public void invalidateStatusColor() {
-        View toolbarFrame = findViewById(R.id.toolbar_frame);
-        if (mMediaCab != null) {
-            // This makes the status text view background the same as the CAB
-            toolbarFrame.setBackgroundColor(getResources().getColor(R.color.dark_theme_gray_lighter));
-        } else {
-            toolbarFrame.setBackgroundColor(primaryColor());
         }
     }
 
@@ -242,6 +231,7 @@ public class MainActivity extends ThemedActivity
         processIntent(getIntent());
 
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 

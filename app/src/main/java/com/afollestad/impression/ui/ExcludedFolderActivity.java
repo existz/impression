@@ -44,6 +44,7 @@ public class ExcludedFolderActivity extends ThemedActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(primaryColor());
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.list);

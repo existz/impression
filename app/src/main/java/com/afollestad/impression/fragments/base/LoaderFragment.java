@@ -5,7 +5,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -195,7 +195,7 @@ public abstract class LoaderFragment<VH extends RecyclerView.ViewHolder>
     }
 
     private void invalidateSubtitle(MediaEntry[] entries) {
-        ActionBarActivity act = (ActionBarActivity) getActivity();
+        AppCompatActivity act = (AppCompatActivity) getActivity();
         if (act != null) {
             final boolean toolbarStats = PreferenceManager.getDefaultSharedPreferences(act)
                     .getBoolean("toolbar_album_stats", true);

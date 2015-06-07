@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 
-import com.afollestad.impression.adapters.NavDrawerAdapter;
 import com.afollestad.impression.providers.base.ProviderBase;
 
 import java.io.File;

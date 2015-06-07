@@ -11,7 +11,7 @@ import android.opengl.GLException;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -36,7 +36,7 @@ import java.util.TimerTask;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class EditorActivity extends ActionBarActivity implements GLSurfaceView.Renderer {
+public class EditorActivity extends AppCompatActivity implements GLSurfaceView.Renderer {
 
     private GLSurfaceView mEffectView;
     private Bitmap mBitmap;

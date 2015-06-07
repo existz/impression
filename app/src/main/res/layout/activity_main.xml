@@ -21,23 +21,34 @@
             android:transitionName="Toolbar"
             tools:ignore="UnusedAttribute">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:background="@null"
-                app:contentInsetStart="@dimen/toolbar_inset"
-                app:popupTheme="?popup_theme"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="@null"
+                    app:contentInsetStart="@dimen/toolbar_inset"
+                    app:popupTheme="?popup_theme"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                <ViewStub
+                    android:id="@+id/cab_stub"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize" />
+
+            </FrameLayout>
 
             <com.afollestad.impression.views.BreadCrumbLayout
                 android:id="@+id/breadCrumbs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/breadcrumb_layout_margin"
-                android:paddingStart="@dimen/breadcrumb_layout_margin"
-                android:paddingRight="@dimen/breadcrumb_arrow_margin"
                 android:paddingEnd="@dimen/breadcrumb_arrow_margin"
+                android:paddingLeft="@dimen/breadcrumb_layout_margin"
+                android:paddingRight="@dimen/breadcrumb_arrow_margin"
+                android:paddingStart="@dimen/breadcrumb_layout_margin"
                 android:paddingTop="-48dp"
                 tools:ignore="NewApi,RtlSymmetry" />
 
@@ -45,15 +56,15 @@
                 android:id="@+id/status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                android:textAllCaps="true"
                 android:gravity="center_vertical|start"
                 android:paddingBottom="16dp"
-                android:paddingLeft="72dp"
-                android:paddingStart="72dp"
-                android:paddingRight="16dp"
                 android:paddingEnd="16dp"
+                android:paddingLeft="72dp"
+                android:paddingRight="16dp"
+                android:paddingStart="72dp"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
                 android:visibility="gone"
                 tools:ignore="NewApi" />
 

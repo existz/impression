@@ -66,8 +66,10 @@ public class MediaFragment extends LoaderFragment<MediaAdapter.ViewHolder> imple
     public void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mAlbumPath = savedInstanceState.getString(STATE_ALBUMPATH, null);
-            if (savedInstanceState.containsKey(STATE_MEDIACAB_ENTRIES))
+            if (savedInstanceState.containsKey(STATE_MEDIACAB_ENTRIES)) {
                 mCab = new MediaCab(this, (ViewerActivity.MediaWrapper) savedInstanceState.getSerializable(STATE_MEDIACAB_ENTRIES));
+                mCab.restoreState(savedInstanceState);
+            }
         } else if (getArguments() != null) {
             mAlbumPath = getArguments().getString("albumPath");
         }
@@ -107,8 +109,10 @@ public class MediaFragment extends LoaderFragment<MediaAdapter.ViewHolder> imple
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(STATE_ALBUMPATH, mAlbumPath);
-        if (mCab != null)
+        if (mCab != null) {
             outState.putSerializable(STATE_MEDIACAB_ENTRIES, mCab.getEntries());
+            mCab.saveState(outState);
+        }
     }
 
     @Override

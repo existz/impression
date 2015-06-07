@@ -7,7 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.afollestad.impression.R;
 import com.afollestad.impression.fragments.dialog.ColorChooserDialog;
@@ -16,7 +16,7 @@ import com.afollestad.materialdialogs.ThemeSingleton;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public abstract class ThemedActivity extends ActionBarActivity {
+public abstract class ThemedActivity extends AppCompatActivity {
 
     private boolean mLastDarkTheme;
     private int mLastPrimaryColor;
