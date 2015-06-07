@@ -17,19 +17,21 @@
         android:title="@string/behavior">
 
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="toolbar_album_stats"
             android:layout="@layout/preference_custom"
             android:persistent="true"
             android:summary="@string/toolbar_stats_desc"
             android:title="@string/toolbar_stats"
-            android:defaultValue="true" />
+            android:widgetLayout="@layout/preference_dynamiccheckbox" />
 
         <CheckBoxPreference
             android:key="overview_mode"
             android:layout="@layout/preference_custom"
             android:persistent="false"
             android:summary="@string/overview_mode_desc"
-            android:title="@string/overview_display" />
+            android:title="@string/overview_display"
+            android:widgetLayout="@layout/preference_dynamiccheckbox" />
 
     </com.afollestad.impression.views.ImpressionPreferenceCategory>
 
@@ -42,7 +44,8 @@
             android:layout="@layout/preference_custom"
             android:persistent="true"
             android:summary="@string/dark_mode_desc"
-            android:title="@string/dark_mode" />
+            android:title="@string/dark_mode"
+            android:widgetLayout="@layout/preference_dynamiccheckbox" />
 
         <com.afollestad.impression.views.ImpressionPreference
             android:key="primary_color"
@@ -60,7 +63,8 @@
             android:layout="@layout/preference_custom"
             android:persistent="true"
             android:summary="@string/colored_navbar_desc"
-            android:title="@string/colored_navbar" />
+            android:title="@string/colored_navbar"
+            android:widgetLayout="@layout/preference_dynamiccheckbox" />
 
     </com.afollestad.impression.views.ImpressionPreferenceCategory>
 
@@ -74,7 +78,8 @@
             android:layout="@layout/preference_custom"
             android:persistent="true"
             android:summary="@string/include_subfolders_included_desc"
-            android:title="@string/include_subfolders" />
+            android:title="@string/include_subfolders"
+            android:widgetLayout="@layout/preference_dynamiccheckbox" />
 
     </com.afollestad.impression.views.ImpressionPreferenceCategory>
 
@@ -93,7 +98,8 @@
             android:layout="@layout/preference_custom"
             android:persistent="true"
             android:summary="@string/include_subfolders_desc"
-            android:title="@string/include_subfolders" />
+            android:title="@string/include_subfolders"
+            android:widgetLayout="@layout/preference_dynamiccheckbox" />
 
     </com.afollestad.impression.views.ImpressionPreferenceCategory>
 

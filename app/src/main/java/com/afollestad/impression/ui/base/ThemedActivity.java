@@ -84,6 +84,7 @@ public abstract class ThemedActivity extends ActionBarActivity {
         ThemeSingleton.get().positiveColor = mLastAccentColor;
         ThemeSingleton.get().neutralColor = mLastAccentColor;
         ThemeSingleton.get().negativeColor = mLastAccentColor;
+        ThemeSingleton.get().widgetColor = mLastAccentColor;
         setTheme(mLastDarkTheme ? darkTheme() : lightTheme());
         super.onCreate(savedInstanceState);
 
