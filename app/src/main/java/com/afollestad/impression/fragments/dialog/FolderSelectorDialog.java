@@ -52,10 +52,12 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
     private File[] listFiles() {
         File[] contents = parentFolder.listFiles();
         List<File> results = new ArrayList<>();
-        for (File fi : contents) {
-            if (fi.isDirectory()) results.add(fi);
+        if (contents != null) {
+            for (File fi : contents) {
+                if (fi.isDirectory()) results.add(fi);
+            }
+            Collections.sort(results, new FolderSorter());
         }
-        Collections.sort(results, new FolderSorter());
         return results.toArray(new File[results.size()]);
     }
 
