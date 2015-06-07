@@ -151,7 +151,7 @@ public class MediaCab implements ActionMode.Callback, Serializable {
 
         menu.findItem(R.id.share).setVisible(!foundDir);
         menu.findItem(R.id.exclude).setVisible(allAlbumsOrFolders);
-        if (mMediaEntries != null && mMediaEntries.size() > 0) {
+        if (mMediaEntries.size() > 0) {
             MediaEntry firstEntry = mMediaEntries.get(0);
             boolean canShow = mMediaEntries.size() == 1 && !firstEntry.isVideo() && !firstEntry.isAlbum();
             menu.findItem(R.id.edit).setVisible(canShow);
@@ -294,9 +294,10 @@ public class MediaCab implements ActionMode.Callback, Serializable {
             if (toSend.size() == 1) {
                 String mime = toSend.get(0).isVideo() ? "video/*" : "image/*";
                 try {
-                    mContext.startActivity(new Intent(Intent.ACTION_SEND)
+                    Intent intent = new Intent(Intent.ACTION_SEND)
                             .setType(mime)
-                            .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(toSend.get(0).data()))));
+                            .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(toSend.get(0).data())));
+                    mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.share_using)));
                 } catch (ActivityNotFoundException e) {
                     if (mContext.getActivity() != null)
                         Toast.makeText(mContext.getActivity(), R.string.no_app_complete_action, Toast.LENGTH_SHORT).show();
@@ -317,9 +318,10 @@ public class MediaCab implements ActionMode.Callback, Serializable {
                     mime = "video/*";
                 }
                 try {
-                    mContext.startActivity(new Intent(Intent.ACTION_SEND_MULTIPLE)
+                    Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE)
                             .setType(mime)
-                            .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris));
+                            .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                    mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.share_using)));
                 } catch (ActivityNotFoundException e) {
                     if (mContext.getActivity() != null)
                         Toast.makeText(mContext.getActivity(), R.string.no_app_complete_action, Toast.LENGTH_SHORT).show();

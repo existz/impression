@@ -184,5 +184,6 @@
     <string name="toolbar_stats">Toolbar Album Stats</string>
     <string name="toolbar_stats_desc">Display the number of photos and videos in an album in the toolbar.</string>
     <string name="empty">empty</string>
+    <string name="share_using">Share using…</string>
 
 </resources>
