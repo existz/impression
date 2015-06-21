@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Impression</string>
+    <string name="about">Sobre</string><string name="about_body"><![CDATA[
+        <b>Impression</b>, uma bela galeria desenvolvida por <b>Aidan Follestad</b>.<br/>
+        <a href=\'http://aidanfollestad.com\'>Website</a>&nbsp;&nbsp;
+        <a href=\'https://twitter.com/afollestad\'>Twitter</a>&nbsp;&nbsp;
+        <a href=\'https://google.com/+AidanFollestad\'>Google+</a>&nbsp;&nbsp;
+        <a href=\'https://github.com/afollestad\'>GitHub</a>&nbsp;&nbsp;
+        <a href=\'https://www.linkedin.com/in/afollestad\'>LinkedIn</a><br/><br/>
+        Ícone do launcher e imagem do Google Play criadas por <a href=\'https://plus.google.com/112332148992467376978\'>Александр Карпилович</a>.
+    ]]></string>
+    <string name="add_account">Adicionar uma conta…</string>
+    <string name="about_desc">Sobre o aplicativo, seu desenvolvedor, contribuintes, etc.</string>
+    <string name="about_dialog_title">Impression %1$s</string>
+    <string name="accent_color">Cor de destaque</string>
+    <string name="accent_color_desc">Aplica uma cor de destaque</string>
+    <string name="accounts">Contas</string>
+    <string name="add">Adicionar</string>
+    <string name="all">Tudo</string>
+    <string name="x_albums">%1$d álbuns</string>
+    <string name="x_photos">%1$d fotos</string>
+    <string name="x_folders">%1$d pastas</string>
+    <string name="x_videos">%1$d vídeos</string>
+    <string name="yes">Sim</string>
+    <string name="whats_new">Novidades</string>
+    <string name="vignette">Vinheta</string>
+    <string name="videos">Vídeos</string>
+    <string name="choose_album">Escolha um álbum…</string>
+    <string name="colored_navbar">Barra de navegação colorida</string>
+    <string name="colored_navbar_desc">Aplica a cor primária à barra de navegação</string><string name="confirm_exclude_album"><![CDATA[
+        Ignorar a pasta <b>%1$s</b>?
+    ]]></string><string name="confirm_exclude_album_remove"><![CDATA[
+        Remover <b>%1$s</b> das pastas ignoradas?
+    ]]></string><string name="confirm_folder_remove"><![CDATA[
+        Remover a pasta inclusa <b>%1$s</b>?
+    ]]></string>
+    <string name="copy_to">Copiar para…</string>
+    <string name="copying">Copiando…</string>
+    <string name="crop">Cortar</string>
+    <string name="contrast">Contraste</string>
+    <string name="dark_mode">Modo noturno</string>
+    <string name="dark_mode_desc">Aplica um fundo escuro ao aplicativo</string>
+    <string name="defaultStr">Padrão</string>
+    <string name="delete">Excluir</string>
+    <string name="delete_bulk_confirm">Tem certeza de que deseja excluir os itens selecionados?</string>
+    <string name="delete_confirm_photo">Excluir esta foto?</string>
+    <string name="delete_confirm_video">Excluir este vídeo?</string>
+    <string name="deleting">Excluindo…</string>
+    <string name="details">Detalhes</string><string name="details_contents"><![CDATA[
+        <b>Tirada em:</b>&nbsp;&nbsp;%1$s<br/>
+        <b>Dimensões:</b>&nbsp;&nbsp;%2$s<br/>
+        <b>Nome do arquivo:</b>&nbsp;&nbsp;%3$s<br/>
+        <b>Tamanho do arquivo:</b>&nbsp;&nbsp;%4$s<br/>
+        <b>Caminho do arquivo:</b>&nbsp;&nbsp;%5$s
+    ]]></string>
+    <string name="dismiss">Dispensar</string>
+    <string name="documentary">Documentário</string>
+    <string name="download">Baixar</string>
+    <string name="draw">Desenhar</string>
+    <string name="dropbox">Dropbox</string>
+    <string name="edit">Editar</string>
+    <string name="duotone">Dois Tons</string>
+    <string name="empty">vazia</string>
+    <string name="error">Erro</string>
+    <string name="exclude">Ignorar</string>
+    <string name="exclude_prompt">Ignorar %1$d álbuns?</string>
+    <string name="exclude_prompt_single">Ignorar o álbum selecionado?</string>
+    <string name="excluded_folders">Álbuns ignorados</string>
+    <string name="excluded_folders_desc">Editar os álbuns que não serão mostrados no aplicativo.</string>
+    <string name="excluding">Ignorando…</string>
+    <string name="explorer_mode">Modo explorador</string>
+    <string name="filter">Filtro</string>
+    <string name="filtering_photos">Filtrar: Fotos</string>
+    <string name="filtering_videos">Filtrar: Vídeos</string>
+    <string name="filters">Filtros</string>
+    <string name="fisheye">Olho de peixe</string>
+    <string name="flip">Espelhar</string>
+    <string name="flip_horizontal">Espelhar horizontalmente</string>
+    <string name="flip_vertical">Espelhar verticalmente</string>
+    <string name="folder">Pasta</string>
+    <string name="go_up">Subir…</string>
+    <string name="google_drive">Google Drive</string>
+    <string name="grain">Granulado</string>
+    <string name="five_num">5</string>
+    <string name="four_num">4</string>
+    <string name="grayscale">Preto e Branco</string>
+    <string name="grid_size">Tamanho da grade</string>
+    <string name="impression_editor">Impression Editor (preview)</string>
+    <string name="include_folder">Incluir uma pasta…</string>
+    <string name="include_subfolders">Incluir subpastas</string>
+    <string name="include_subfolders_desc">Ignorar subpastas de álbuns ignorados</string>
+    <string name="include_subfolders_included_desc">Exibe subpastas dentro de pastas inclusas</string>
+    <string name="included_folders">Pastas inclusas</string>
+    <string name="info">Informações</string>
+    <string name="internal_storage">Armazenamento interno</string>
+    <string name="invalid_file_path_error">Este arquivo não existe ou o Impression não tem permissão para acessá-lo.</string>
+    <string name="local">Local</string>
+    <string name="modified_asc">Data crescente</string>
+    <string name="modified_desc">Data decrescente</string>
+    <string name="move_to">Mover para…</string>
+    <string name="moving">Movendo…</string>
+    <string name="name_asc">Nome crescente</string>
+    <string name="name_desc">Nome descrescente</string>
+    <string name="navigation_drawer_close">Fechar painel de navegação</string>
+    <string name="navigation_drawer_open">Abrir painel de navegação</string>
+    <string name="negative">Negativo</string>
+    <string name="no">Não</string>
+    <string name="no_app_complete_action">Nenhum aplicativo encontrado para realizar esta ação…</string>
+    <string name="no_excluded_folders">Nenhum álbum ignorado ainda!</string>
+    <string name="no_photos">Não há fotos aqui!</string>
+    <string name="no_photosorvideos">Não há fotos ou vídeos aqui!</string>
+    <string name="no_videos">Não há vídeos aqui!</string>
+    <string name="one_album">1 álbum</string>
+    <string name="one_folder">1 pasta</string>
+    <string name="one_num">1</string>
+    <string name="one_photo">1 foto</string>
+    <string name="one_video">1 vídeo</string>
+    <string name="open_permission_error">O Impression não tem permissão para acessar o arquivo de mídia solicitado.</string>
+    <string name="overview">Visão geral</string>
+    <string name="overview_display">Visão geral de todas as mídias</string>
+    <string name="overview_mode_desc">Mostra uma lista contínua de todas as mídias, em vez de álbuns</string>
+    <string name="photos">Fotos</string>
+    <string name="pick_something">Escolha algo…</string>
+    <string name="posterize">Posterizar</string>
+    <string name="primary_color">Cor primária</string>
+    <string name="primary_color_desc">Aplica a cor primária</string>
+    <string name="print">Imprimir</string>
+    <string name="remember_for_directory">Lembrar para este diretório</string>
+    <string name="root">Raiz</string>
+    <string name="rotate">Girar</string>
+    <string name="rotate_left">Girar para esquerda</string>
+    <string name="rotate_right">Girar para direita</string>
+    <string name="saturate">Saturar</string>
+    <string name="save">Salvar</string>
+    <string name="selectAll">Selecionar tudo</string>
+    <string name="sepia">Sépia</string>
+    <string name="set_as">Definir como…</string>
+    <string name="settings">Configurações</string>
+    <string name="share">Compartilhar</string>
+    <string name="share_using">Compartilhar com…</string>
+    <string name="six_num">6</string>
+    <string name="slideshow">Apresentação</string>
+    <string name="slideshow_loop">Apresentação em loop</string>
+    <string name="slideshow_seeklabel">%1$d segundos entre cada foto</string>
+    <string name="slideshow_seeklabel_single">1 segundo entre cada foto</string>
+    <string name="sort">Ordenar</string>
+    <string name="start">Iniciar</string>
+    <string name="temperature">Temperatura</string>
+    <string name="theme">Tema</string>
+    <string name="three_num">3</string>
+    <string name="tint">Colorir</string>
+    <string name="toolbar_stats">Informações na barra de ferramentas</string>
+    <string name="toolbar_stats_desc">Mostra o número de fotos e vídeos do álbum na barra de ferramentas</string>
+    <string name="two_num">2</string>
+    <string name="view_mode">Modo de visualização</string>
+    <string name="behavior">Comportamento</string>
+    <string name="autofix">Correção automática</string>
+    <string name="brightness">Brilho</string>
+    <string name="choose">Escolher</string>
+</resources>
