@@ -3,7 +3,7 @@ apply plugin: 'versionPlugin'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.0 rc3"
 
     signingConfigs {
         production {
@@ -39,10 +39,10 @@ repositories {
 }
 
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.7.5.5'
+    compile 'com.afollestad:material-dialogs:0.7.6.0'
     compile 'com.afollestad:material-cab:0.1.4'
 
-    compile 'com.koushikdutta.ion:ion:2.1.4'
+    compile 'com.koushikdutta.ion:ion:2.1.6'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
 
     compile 'com.android.support:appcompat-v7:22.2.0@aar'
