@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.7.6.0'
+    compile 'com.afollestad:material-dialogs:0.7.7.0'
     compile 'com.afollestad:material-cab:0.1.4'
 
     compile 'com.koushikdutta.ion:ion:2.1.6'
