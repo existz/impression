@@ -28,6 +28,7 @@ import com.afollestad.impression.ui.MainActivity;
 import com.afollestad.impression.ui.viewer.ViewerActivity;
 import com.afollestad.impression.utils.TimeUtils;
 import com.afollestad.impression.utils.Utils;
+import com.afollestad.inquiry.Inquiry;
 import com.afollestad.materialcab.MaterialCab;
 import com.afollestad.materialdialogs.MaterialDialog;
 
