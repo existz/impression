@@ -45,10 +45,10 @@ dependencies {
     compile 'com.koushikdutta.ion:ion:2.1.6'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
 
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.android.support:support-v13:22.2.1'
-    compile 'com.android.support:palette-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:recyclerview-v7:23.0.0'
+    compile 'com.android.support:support-v13:23.0.0'
+    compile 'com.android.support:palette-v7:23.0.0'
 }
 
 versionPlugin {
