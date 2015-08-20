@@ -2,6 +2,7 @@ package com.afollestad.impression.ui.base;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
+import android.content.res.ColorStateList;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -81,9 +82,10 @@ public abstract class ThemedActivity extends AppCompatActivity {
         mLastPrimaryColor = primaryColor();
         mLastAccentColor = accentColor();
         mLastColoredNav = isColoredNavBar();
-        ThemeSingleton.get().positiveColor = mLastAccentColor;
-        ThemeSingleton.get().neutralColor = mLastAccentColor;
-        ThemeSingleton.get().negativeColor = mLastAccentColor;
+        ColorStateList sl = ColorStateList.valueOf(mLastAccentColor);
+        ThemeSingleton.get().positiveColor = sl;
+        ThemeSingleton.get().neutralColor = sl;
+        ThemeSingleton.get().negativeColor = sl;
         ThemeSingleton.get().widgetColor = mLastAccentColor;
         setTheme(mLastDarkTheme ? darkTheme() : lightTheme());
         super.onCreate(savedInstanceState);
