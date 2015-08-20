@@ -42,7 +42,6 @@ import com.afollestad.impression.R;
 import com.afollestad.impression.adapters.MediaAdapter;
 import com.afollestad.impression.adapters.ViewerPageAdapter;
 import com.afollestad.impression.api.PhotoEntry;
-import com.afollestad.impression.api.VideoEntry;
 import com.afollestad.impression.api.base.MediaEntry;
 import com.afollestad.impression.fragments.dialog.SlideshowInitDialog;
 import com.afollestad.impression.fragments.viewer.ViewerPageFragment;
@@ -354,15 +353,17 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
                             e.printStackTrace();
                         }
                         if (tempPath != null) {
-                            String mime = Utils.getMimeType(Utils.getExtension(tempPath));
-                            if (mime.startsWith("video")) {
-                                VideoEntry entry = new VideoEntry().load(new File(tempPath));
-                                entry.originalUri = path;
-                                mEntries.add(entry);
-                            } else {
-                                PhotoEntry entry = new PhotoEntry().load(new File(tempPath));
-                                entry.originalUri = path;
-                                mEntries.add(entry);
+                            // @author Viswanath Lekshmanan
+                            // #282 Fix to load all other photos in the same album when loading using URI
+                            final File file = new File(tempPath);
+                            final List<MediaEntry> brothers = Utils.getEntriesFromFolder(this, file.getParentFile(), false, false, MediaAdapter.FileFilterMode.ALL);
+                            mEntries.addAll(brothers);
+                            for (int i = 0; i < brothers.size(); i++) {
+                                if (brothers.get(i).data().equals(file.getAbsolutePath())) {
+                                    mCurrentPosition = i;
+                                    dontSetPos = true;
+                                    break;
+                                }
                             }
                         } else {
                             path = null;
