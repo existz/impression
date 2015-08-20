@@ -1,10 +1,14 @@
 package com.afollestad.impression.fragments;
 
+import android.Manifest;
 import android.app.Fragment;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -198,6 +202,12 @@ public class NavDrawerFragment extends Fragment implements NavDrawerAdapter.Call
         super.onViewCreated(view, savedInstanceState);
         final ThemedActivity act = (ThemedActivity) getActivity();
         view.findViewById(R.id.headerFrame).setBackgroundColor(act.primaryColor());
+
+        if (ContextCompat.checkSelfPermission(act, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 69);
+            return;
+        }
         reloadAccounts();
     }
 

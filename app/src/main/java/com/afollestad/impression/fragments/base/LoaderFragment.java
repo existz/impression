@@ -1,10 +1,13 @@
 package com.afollestad.impression.fragments.base;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -169,7 +172,10 @@ public abstract class LoaderFragment<VH extends RecyclerView.ViewHolder>
 
     public final void reload() {
         final Activity act = getActivity();
-        if (act == null) return;
+        if (act == null || ContextCompat.checkSelfPermission(act, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
 
         saveScrollPosition();
         invalidateEmptyText();

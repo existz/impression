@@ -8,12 +8,14 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SharedElementCallback;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -43,6 +45,7 @@ import com.afollestad.impression.providers.SortMemoryProvider;
 import com.afollestad.impression.ui.base.ThemedActivity;
 import com.afollestad.impression.utils.Utils;
 import com.afollestad.impression.views.BreadCrumbLayout;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.util.List;
@@ -214,6 +217,29 @@ public class MainActivity extends ThemedActivity
         Fragment frag = getFragmentManager().findFragmentById(R.id.content_frame);
         if (frag != null) {
             ((MediaFragment) frag).saveScrollPosition();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == -1) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.permission_needed)
+                    .content(R.string.permission_needed_desc)
+                    .cancelable(false)
+                    .positiveText(android.R.string.ok)
+                    .dismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            finish();
+                        }
+                    }).show();
+        } else {
+            MediaFragment content = (MediaFragment) getFragmentManager().findFragmentById(R.id.content_frame);
+            if (content != null) content.reload();
+            NavDrawerFragment nav = (NavDrawerFragment) getFragmentManager().findFragmentByTag("NAV_DRAWER");
+            if (nav != null) nav.reloadAccounts();
         }
     }
 
