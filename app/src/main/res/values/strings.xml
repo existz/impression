@@ -135,7 +135,6 @@
     <string name="choose_album">Choose an album…</string>
     <string name="invalid_file_path_error">This file does not exist or Impression does not have permission to access it.</string>
     <string name="included_folders">Included Folders</string>
-    <string name="defaultStr">Default</string>
     <string name="primary_color">Primary Color</string>
     <string name="primary_color_desc">Apply a primary theme color</string>
     <string name="accent_color">Accent Color</string>
@@ -187,5 +186,6 @@
     <string name="share_using">Share using…</string>
     <string name="permission_needed">Permission Needed</string>
     <string name="permission_needed_desc">Permission to access your phone\'s storage is needed in order to view and save images! Impression will now close.</string>
+    <string name="back">Back</string>
 
 </resources>

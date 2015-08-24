@@ -20,6 +20,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.internal.view.menu.ListMenuItemView;
+import android.support.v7.internal.view.menu.MenuPopupHelper;
+import android.support.v7.widget.ActionMenuPresenter;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -31,7 +35,10 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.afollestad.impression.R;
@@ -46,8 +53,11 @@ import com.afollestad.impression.ui.base.ThemedActivity;
 import com.afollestad.impression.utils.Utils;
 import com.afollestad.impression.views.BreadCrumbLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.ThemeSingleton;
+import com.afollestad.materialdialogs.internal.MDTintHelper;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -616,6 +626,88 @@ public class MainActivity extends ThemedActivity
             if (nav.mCurrentAccount == null)
                 nav.reloadAccounts();
             else nav.getAlbums(nav.mCurrentAccount);
+        }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        invalidateMenuTint();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void invalidateMenuTint() {
+        mToolbar.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Field f1 = Toolbar.class.getDeclaredField("mMenuView");
+                    f1.setAccessible(true);
+                    ActionMenuView actionMenuView = (ActionMenuView) f1.get(mToolbar);
+
+                    Field f2 = ActionMenuView.class.getDeclaredField("mPresenter");
+                    f2.setAccessible(true);
+                    ActionMenuPresenter presenter = (ActionMenuPresenter) f2.get(actionMenuView);
+
+                    Field f3 = presenter.getClass().getDeclaredField("mOverflowPopup");
+                    f3.setAccessible(true);
+                    MenuPopupHelper overflowMenuPopupHelper = (MenuPopupHelper) f3.get(presenter);
+                    setTintForMenuPopupHelper(overflowMenuPopupHelper);
+
+                    Field f4 = presenter.getClass().getDeclaredField("mActionButtonPopup");
+                    f4.setAccessible(true);
+                    MenuPopupHelper subMenuPopupHelper = (MenuPopupHelper) f4.get(presenter);
+                    setTintForMenuPopupHelper(subMenuPopupHelper);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void setTintForMenuPopupHelper(MenuPopupHelper menuPopupHelper) {
+        if (menuPopupHelper != null) {
+            final ListView listView = menuPopupHelper.getPopup().getListView();
+            listView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    try {
+                        Field checkboxField = ListMenuItemView.class.getDeclaredField("mCheckBox");
+                        checkboxField.setAccessible(true);
+                        Field radioButtonField = ListMenuItemView.class.getDeclaredField("mRadioButton");
+                        radioButtonField.setAccessible(true);
+
+                        for (int i = 0; i < listView.getChildCount(); i++) {
+                            View v = listView.getChildAt(i);
+                            if (!(v instanceof ListMenuItemView)) continue;
+                            ListMenuItemView iv = (ListMenuItemView) v;
+
+                            CheckBox check = (CheckBox) checkboxField.get(iv);
+                            if (check != null) {
+                                MDTintHelper.setTint(check, ThemeSingleton.get().widgetColor);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    check.setBackground(null);
+                                }
+                            }
+
+                            RadioButton radioButton = (RadioButton) radioButtonField.get(iv);
+                            if (radioButton != null) {
+                                MDTintHelper.setTint(radioButton, ThemeSingleton.get().widgetColor);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    radioButton.setBackground(null);
+                                }
+                            }
+                        }
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        listView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    } else {
+                        //noinspection deprecation
+                        listView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    }
+                }
+            });
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.afollestad.impression.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.TwoStatePreference;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
@@ -45,12 +47,25 @@ public class SettingsActivity extends ThemedActivity implements ColorChooserDial
         return true;
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
-    public void onColorSelection(int title, int color) {
-        if (title == R.string.primary_color)
+    public void onColorSelection(@StringRes int dialogTitle, int topLevelColor, int subLevelColor) {
+        final String suffix;
+        final int color = subLevelColor != 0 ? subLevelColor : topLevelColor;
+        if (dialogTitle == R.string.primary_color) {
             primaryColor(color);
-        else
+            suffix = "primary";
+        } else {
             accentColor(color);
+            suffix = "accent";
+        }
+
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        if (topLevelColor != 0) editor.putInt("top_level_color_" + suffix, topLevelColor);
+        else editor.remove("top_level_color_" + suffix);
+        if (subLevelColor != 0) editor.putInt("sub_level_color_" + suffix, subLevelColor);
+        else editor.remove("sub_level_color_" + suffix);
+        editor.commit();
         recreate();
     }
 
@@ -138,8 +153,12 @@ public class SettingsActivity extends ThemedActivity implements ColorChooserDial
             primaryColor.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    new ColorChooserDialog().show(getActivity(), preference.getTitleRes(),
-                            ((ThemedActivity) getActivity()).primaryColor());
+                    ThemedActivity act = (ThemedActivity) getActivity();
+                    if (act == null) return false;
+                    SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(act);
+                    ColorChooserDialog.show(act, preference.getTitleRes(),
+                            pref.getInt("top_level_color_primary", act.primaryColor()),
+                            pref.getInt("sub_level_color_primary", 0));
                     return true;
                 }
             });
@@ -150,8 +169,12 @@ public class SettingsActivity extends ThemedActivity implements ColorChooserDial
             accentColor.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    new ColorChooserDialog().show(getActivity(), preference.getTitleRes(),
-                            ((ThemedActivity) getActivity()).accentColor());
+                    ThemedActivity act = (ThemedActivity) getActivity();
+                    if (act == null) return false;
+                    SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(act);
+                    ColorChooserDialog.show(act, preference.getTitleRes(),
+                            pref.getInt("top_level_color_accent", act.accentColor()),
+                            pref.getInt("sub_level_color_accent", 0));
                     return true;
                 }
             });

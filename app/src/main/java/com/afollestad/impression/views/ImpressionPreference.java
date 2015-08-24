@@ -42,7 +42,7 @@ public class ImpressionPreference extends Preference {
 
     private void invalidateColor() {
         if (mView != null) {
-            CircleView circle = (CircleView) mView.findViewById(R.id.circle);
+            BorderCircleView circle = (BorderCircleView) mView.findViewById(R.id.circle);
             if (this.color != 0) {
                 circle.setVisibility(View.VISIBLE);
                 circle.setBackgroundColor(color);

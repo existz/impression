@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.afollestad.impression.R;
 import com.afollestad.impression.fragments.dialog.ColorChooserDialog;
+import com.afollestad.impression.views.CircleView;
 import com.afollestad.materialdialogs.ThemeSingleton;
 
 /**
@@ -53,7 +54,7 @@ public abstract class ThemedActivity extends AppCompatActivity {
     }
 
     public int primaryColorDark() {
-        return ColorChooserDialog.shiftColor(primaryColor());
+        return CircleView.shiftColorDown(primaryColor());
     }
 
     public int accentColor() {
