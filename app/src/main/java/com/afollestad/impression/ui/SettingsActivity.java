@@ -162,6 +162,7 @@ public class SettingsActivity extends ThemedActivity implements ColorChooserDial
                     if (act == null) return false;
                     new ColorChooserDialog.Builder(act, preference.getTitleRes())
                             .preselect(act.accentColor())
+                            .accentMode(true)
                             .show();
                     return true;
                 }
