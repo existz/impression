@@ -17,8 +17,8 @@ android {
         applicationId "com.afollestad.impression"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 62
-        versionName "0.7.3.10"
+        versionCode 63
+        versionName "0.7.3.11"
     }
     buildTypes {
         debug {
@@ -38,7 +38,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.7.8.1'
+    compile 'com.afollestad:material-dialogs:0.7.9.0'
     compile 'com.afollestad:material-cab:0.1.4'
 
     compile 'com.koushikdutta.ion:ion:2.1.6'

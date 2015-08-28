@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -203,7 +204,8 @@ public class MainActivity extends ThemedActivity
                         statusBar.post(new Runnable() {
                             @Override
                             public void run() {
-                                getWindow().setStatusBarColor(getResources().getColor(android.R.color.transparent));
+                                getWindow().setStatusBarColor(ContextCompat.getColor(
+                                        MainActivity.this, android.R.color.transparent));
                             }
                         });
                     }

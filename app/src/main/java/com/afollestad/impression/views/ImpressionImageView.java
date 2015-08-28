@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,22 +28,22 @@ public class ImpressionImageView extends ImageView {
 
     public ImpressionImageView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     public ImpressionImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
         if (isInEditMode()) return;
         final Resources r = getResources();
         mCheck = BitmapFactory.decodeResource(r, R.drawable.ic_check);
         mPlay = BitmapFactory.decodeResource(r, R.drawable.ic_play);
         mGif = BitmapFactory.decodeResource(r, R.drawable.ic_gif);
-        mPlayOverlay = getResources().getColor(R.color.video_play_overlay);
-        mSelectedColor = getResources().getColor(R.color.picture_activated_overlay);
+        mPlayOverlay = ContextCompat.getColor(context, R.color.video_play_overlay);
+        mSelectedColor = ContextCompat.getColor(context, R.color.picture_activated_overlay);
     }
 
     private MediaEntry mEntry;

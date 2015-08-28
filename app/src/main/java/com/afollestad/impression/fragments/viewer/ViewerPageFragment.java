@@ -276,23 +276,24 @@ public class ViewerPageFragment extends Fragment {
                             mBitmap = result;
                             if (mLightMode != LIGHT_MODE_LOADING) {
                                 mLightMode = LIGHT_MODE_LOADING;
-                                Palette.generateAsync(mBitmap, new Palette.PaletteAsyncListener() {
-                                    @Override
-                                    public void onGenerated(Palette palette) {
-                                        if (palette.getSwatches().size() > 0) {
-                                            float total = 0f;
-                                            for (Palette.Swatch s : palette.getSwatches()) {
-                                                total += s.getHsl()[2];
+                                new Palette.Builder(mBitmap)
+                                        .generate(new Palette.PaletteAsyncListener() {
+                                            @Override
+                                            public void onGenerated(Palette palette) {
+                                                if (palette.getSwatches().size() > 0) {
+                                                    float total = 0f;
+                                                    for (Palette.Swatch s : palette.getSwatches()) {
+                                                        total += s.getHsl()[2];
+                                                    }
+                                                    total /= palette.getSwatches().size();
+                                                    mLightMode = total > 0.5f ? LIGHT_MODE_ON : LIGHT_MODE_OFF;
+                                                } else {
+                                                    mLightMode = LIGHT_MODE_OFF;
+                                                }
+                                                ((ViewerActivity) getActivity()).invalidateLightMode(
+                                                        mImageZoomedUnderToolbar && mLightMode == LIGHT_MODE_ON);
                                             }
-                                            total /= palette.getSwatches().size();
-                                            mLightMode = total > 0.5f ? LIGHT_MODE_ON : LIGHT_MODE_OFF;
-                                        } else {
-                                            mLightMode = LIGHT_MODE_OFF;
-                                        }
-                                        ((ViewerActivity) getActivity()).invalidateLightMode(
-                                                mImageZoomedUnderToolbar && mLightMode == LIGHT_MODE_ON);
-                                    }
-                                });
+                                        });
                             }
 
                             mPhoto.setImageBitmap(result);

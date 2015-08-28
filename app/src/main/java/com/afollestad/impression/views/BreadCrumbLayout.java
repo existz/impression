@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -139,7 +140,7 @@ public class BreadCrumbLayout extends HorizontalScrollView implements View.OnCli
         view.setOnClickListener(this);
 
         ImageView iv = (ImageView) view.getChildAt(1);
-        Drawable arrow = getResources().getDrawable(R.drawable.ic_right_arrow);
+        Drawable arrow = ContextCompat.getDrawable(getContext(), R.drawable.ic_right_arrow);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             arrow.setAutoMirrored(true);
         iv.setImageDrawable(arrow);
@@ -303,7 +304,7 @@ public class BreadCrumbLayout extends HorizontalScrollView implements View.OnCli
     private TextView invalidateActivated(View view, boolean isActive, boolean noArrowIfAlone, boolean allowArrowVisible) {
         LinearLayout child = (LinearLayout) view;
         TextView tv = (TextView) child.getChildAt(0);
-        tv.setTextColor(getResources().getColor(isActive ? R.color.crumb_active : R.color.crumb_inactive));
+        tv.setTextColor(ContextCompat.getColor(getContext(), isActive ? R.color.crumb_active : R.color.crumb_inactive));
         ImageView iv = (ImageView) child.getChildAt(1);
         setAlpha(iv, isActive ? 255 : 109);
         if (noArrowIfAlone && getChildCount() == 1)

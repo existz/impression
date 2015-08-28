@@ -8,10 +8,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.afollestad.impression.R;
-import com.afollestad.impression.fragments.dialog.ColorChooserDialog;
 import com.afollestad.impression.views.CircleView;
 import com.afollestad.materialdialogs.ThemeSingleton;
 
@@ -41,7 +41,7 @@ public abstract class ThemedActivity extends AppCompatActivity {
         String key = "primary_color";
         if (mLastDarkTheme) key += "_dark";
         else key += "_light";
-        final int defaultColor = getResources().getColor(mLastDarkTheme ?
+        final int defaultColor = ContextCompat.getColor(this, mLastDarkTheme ?
                 R.color.dark_theme_gray : R.color.material_indigo_500);
         return PreferenceManager.getDefaultSharedPreferences(this).getInt(key, defaultColor);
     }
@@ -61,7 +61,7 @@ public abstract class ThemedActivity extends AppCompatActivity {
         String key = "accent_color";
         if (mLastDarkTheme) key += "_dark";
         else key += "_light";
-        final int defaultColor = getResources().getColor(R.color.material_pink_500);
+        final int defaultColor = ContextCompat.getColor(this, R.color.material_pink_500);
         return PreferenceManager.getDefaultSharedPreferences(this).getInt(key, defaultColor);
     }
 
@@ -107,7 +107,7 @@ public abstract class ThemedActivity extends AppCompatActivity {
             if (allowStatusBarColoring())
                 getWindow().setStatusBarColor(dark);
             else
-                getWindow().setStatusBarColor(getResources().getColor(android.R.color.transparent));
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
             if (mLastColoredNav)
                 getWindow().setNavigationBarColor(dark);
         }

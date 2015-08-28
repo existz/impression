@@ -23,6 +23,7 @@ import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.print.PrintHelper;
 import android.support.v4.view.ViewPager;
 import android.support.v7.internal.widget.TintImageView;
@@ -121,8 +122,8 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
     public void invalidateLightMode(boolean lightMode) {
         if (lightMode == mLightMode) return;
         mLightMode = lightMode;
-        final Drawable navIcon = getResources().getDrawable(R.drawable.ic_nav_back);
-        final int darkGray = getResources().getColor(R.color.viewer_lightmode_icons);
+        final Drawable navIcon = ContextCompat.getDrawable(this, R.drawable.ic_nav_back);
+        final int darkGray = ContextCompat.getColor(this, R.color.viewer_lightmode_icons);
         navIcon.setColorFilter(mLightMode ? darkGray : Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         mToolbar.setNavigationIcon(navIcon);
         invalidateOptionsMenu();
@@ -201,7 +202,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
             @Override
             public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements,
                                              List<View> sharedElementSnapshots) {
-                int black = getResources().getColor(android.R.color.black);
+                int black = ContextCompat.getColor(ViewerActivity.this, android.R.color.black);
                 int duration = 200;
 
                 View decor = getWindow().getDecorView();
@@ -210,7 +211,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
 
                 if (!mIsReturning) {
                     int primaryColorDark = primaryColorDark();
-                    int viewerOverlayColor = getResources().getColor(R.color.viewer_overlay);
+                    int viewerOverlayColor = ContextCompat.getColor(ViewerActivity.this, R.color.viewer_overlay);
 
                     ObjectAnimator.ofObject(mToolbar, "backgroundColor", new ArgbEvaluator(), primaryColor(), viewerOverlayColor)
                             .setDuration(duration)
@@ -282,6 +283,45 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
             return r.getDimensionPixelSize(id);
         return 0;
     }
+
+    private ViewPager.OnPageChangeListener mPagerListener = new ViewPager.OnPageChangeListener() {
+
+        int previousState;
+        boolean userScrollChange;
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if (userScrollChange)
+                stopSlideshow();
+            ViewerPageFragment noActive = (ViewerPageFragment) getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
+            if (noActive != null)
+                noActive.setIsActive(false);
+            mCurrentPosition = position;
+            ViewerPageFragment active = (ViewerPageFragment) getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
+            if (active != null) {
+                active.setIsActive(true);
+                mLightMode = active.mLightMode == LIGHT_MODE_ON;
+            }
+            mAdapter.mCurrentPage = position;
+            invalidateOptionsMenu();
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            if (previousState == ViewPager.SCROLL_STATE_DRAGGING
+                    && state == ViewPager.SCROLL_STATE_SETTLING)
+                userScrollChange = true;
+            else if (previousState == ViewPager.SCROLL_STATE_SETTLING
+                    && state == ViewPager.SCROLL_STATE_IDLE)
+                userScrollChange = false;
+
+            previousState = state;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -398,44 +438,8 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
 
             // When the view pager is swiped, fragments are notified if they're active or not
             // And the menu updates based on the color mode (light or dark).
-            mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-                int previousState;
-                boolean userScrollChange;
-
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                }
-
-                @Override
-                public void onPageSelected(int position) {
-                    if (userScrollChange)
-                        stopSlideshow();
-                    ViewerPageFragment noActive = (ViewerPageFragment) getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
-                    if (noActive != null)
-                        noActive.setIsActive(false);
-                    mCurrentPosition = position;
-                    ViewerPageFragment active = (ViewerPageFragment) getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
-                    if (active != null) {
-                        active.setIsActive(true);
-                        mLightMode = active.mLightMode == LIGHT_MODE_ON;
-                    }
-                    mAdapter.mCurrentPage = position;
-                    invalidateOptionsMenu();
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                    if (previousState == ViewPager.SCROLL_STATE_DRAGGING
-                            && state == ViewPager.SCROLL_STATE_SETTLING)
-                        userScrollChange = true;
-                    else if (previousState == ViewPager.SCROLL_STATE_SETTLING
-                            && state == ViewPager.SCROLL_STATE_IDLE)
-                        userScrollChange = false;
-
-                    previousState = state;
-                }
-            });
+            mPager.addOnPageChangeListener(mPagerListener);
 
             mFinishedTransition = getIntent().getData() != null || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
             setupSharedElementCallback();
@@ -467,6 +471,12 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
                 getNavigationBarHeight(false, true),
                 mToolbar.getPaddingBottom()
         );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPager.removeOnPageChangeListener(mPagerListener);
     }
 
     private int translateToViewerIndex(int remote) {
@@ -617,7 +627,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
         }
         menu.findItem(R.id.slideshow).setVisible(!mAllVideos && mSlideshowTimer == null);
 
-        final int darkGray = getResources().getColor(R.color.viewer_lightmode_icons);
+        final int darkGray = ContextCompat.getColor(this, R.color.viewer_lightmode_icons);
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             if (item.getIcon() != null)
@@ -651,6 +661,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
         });
     }
 
+    @SuppressWarnings("deprecation")
     private static void removeOnGlobalLayoutListener(View v, ViewTreeObserver.OnGlobalLayoutListener listener) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             v.getViewTreeObserver().removeGlobalOnLayoutListener(listener);

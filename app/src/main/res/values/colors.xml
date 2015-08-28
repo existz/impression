@@ -19,9 +19,6 @@
     <color name="dark_theme_gray_lighter">#292929</color>
     <color name="nav_drawer_dark">#424242</color>
 
-    <color name="notification_title">#ffffff</color>
-    <color name="notification_content">#80ffffff</color>
-
     <color name="crumb_active">#fff</color>
     <color name="crumb_inactive">#73ffffff</color>
 

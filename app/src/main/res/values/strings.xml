@@ -128,7 +128,6 @@
     <string name="go_up">Go up…</string>
     <string name="copying">Copying…</string>
     <string name="moving">Moving…</string>
-    <string name="download">Download</string>
     <string name="include_subfolders">Include Subfolders</string>
     <string name="include_subfolders_desc">Exclude subfolders of exluded albums</string>
     <string name="include_subfolders_included_desc">Display subfolders inside of included folders</string>
@@ -153,7 +152,6 @@
     <string name="slideshow_seeklabel_single">1 second between each slide</string>
     <string name="colored_navbar">Colored Navigation Bar</string>
     <string name="colored_navbar_desc">Apply the primary color to the navigation bar</string>
-    <string name="whats_new">What\'s New</string>
     <string name="root">Root</string>
     <string name="internal_storage">Internal Storage</string>
 
