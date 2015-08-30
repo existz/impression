@@ -185,5 +185,6 @@
     <string name="permission_needed">Permission Needed</string>
     <string name="permission_needed_desc">Permission to access your phone\'s storage is needed in order to view and save images! Impression will now close.</string>
     <string name="back">Back</string>
+    <string name="done">Done</string>
 
 </resources>

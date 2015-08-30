@@ -147,6 +147,9 @@ public class SettingsActivity extends ThemedActivity implements ColorChooserDial
                     if (act == null) return false;
                     new ColorChooserDialog.Builder(act, preference.getTitleRes())
                             .preselect(act.primaryColor())
+                            .backButton(R.string.back)
+                            .doneButton(R.string.done)
+                            .cancelButton(android.R.string.cancel)
                             .show();
                     return true;
                 }
@@ -163,6 +166,9 @@ public class SettingsActivity extends ThemedActivity implements ColorChooserDial
                     new ColorChooserDialog.Builder(act, preference.getTitleRes())
                             .preselect(act.accentColor())
                             .accentMode(true)
+                            .backButton(R.string.back)
+                            .doneButton(R.string.done)
+                            .cancelButton(android.R.string.cancel)
                             .show();
                     return true;
                 }
